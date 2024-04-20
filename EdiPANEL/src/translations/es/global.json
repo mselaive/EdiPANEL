@@ -1,0 +1,57 @@
+{
+
+    "navbar":{
+        "lenguage":"English",
+        "message":"¡Bienvenido!",
+        "profile":"Perfil",
+        "settings":"Ajustes",
+        "logout":"Desconectarse"
+    },
+    "auth":{
+        "title-auth":"¡Bienvenido!",
+        "desc-auth":"Bienvenido a la plataforma de administración de la empresa EdiPANEL, porfavor inicia sesión.",
+        "box-title":"Inicio de sesión",
+        "box-email":"Correo electrónico",
+        "box-pass":"Contraseña",
+        "box-remember":"Recordar",
+        "box-login":"Iniciar",
+        "forgot-auth":"¿Te olvidaste?",
+        "register-auth":"Crear nueva cuenta"
+    },
+    "navbar-auth":{
+        "register":"Registro",
+        "language":"English"
+    },
+    
+    "index":{
+        "visits":"Ultimas visitas",
+        "visits-title1":"Nombre",
+        "visits-title2":"Invitados",
+        "visits-title3":"Edificio",
+        "visits-title4":"Hora",
+
+        "commun":"Visitas más comunes",
+        "commun-title":"Nombre",
+        "commun-number":"Cantidad",
+        "commun-perc":"Porcentaje"
+    },
+    
+    "routes":{
+        "main":"Home"
+    },
+
+    "header":{
+        "title1":"Cantidad de visitas",
+        "desc1":"Desde el ultimo mes",
+        "title2":"Cantidad de paquetes",
+        "title3":"Estacionamientos",
+        "title4":"Nuevos usuarios"
+    },
+
+    "sidebar":{
+        "message":"¡Bienvenido!",
+        "profile":"Perfil",
+        "settings":"Ajustes",
+        "logout":"Desconectarse"
+    }
+}

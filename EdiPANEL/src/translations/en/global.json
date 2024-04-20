@@ -1,0 +1,49 @@
+{
+    "navbar":{
+        "lenguage":"Español"
+    },
+    "auth":{
+        "title-auth":"Welcome!",
+        "desc-auth":"Welcome to the EdiPANEL company management platform, please log in.",
+        "box-title":"Login",
+        "box-email":"Email",
+        "box-pass":"Password",
+        "box-remember":"Remember",
+        "box-login":"Start",
+        "forgot-auth":"Forgot?",
+        "register-auth":"Create new account"
+    },
+    "navbar-auth":{
+        "register":"Register",
+        "language":"Español"
+    },
+    "index":{
+        "visits":"Latest visits",
+        "visits-title1":"Name",
+        "visits-title2":"Guests",
+        "visits-title3":"Building",
+        "visits-title4":"Time",
+
+        "commun":"Most common visits",
+        "commun-title":"Name",
+        "commun-number":"Quantity",
+        "commun-perc":"Percentage"
+    },
+    "routes":{
+        "main":"Home"
+    },
+    "header":{
+        "title1":"Number of visits",
+        "desc1":"Since last month",
+        "title2":"Number of packages",
+        "title3":"Parking lots",
+        "title4":"New users"
+    },
+
+    "sidebar":{
+        "message":"Welcome",
+        "profile":"Profile",
+        "settings":"Settings",
+        "logout":"Logout"
+    }
+}
