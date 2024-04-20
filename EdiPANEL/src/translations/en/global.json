@@ -1,7 +1,12 @@
 {
     "navbar":{
-        "lenguage":"Español"
+        "lenguage":"Español",
+        "message":"Welcome!",
+        "profile":"Profile",
+        "settings":"Settings",
+        "logout":"Log out"
     },
+
     "auth":{
         "title-auth":"Welcome!",
         "desc-auth":"Welcome to the EdiPANEL company management platform, please log in.",
