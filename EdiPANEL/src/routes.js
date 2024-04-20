@@ -6,6 +6,8 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import Forms_visits from "views/examples/Form_new_visits.js";
+import Form_vehicle from "views/examples/Form_vehicle.js";
 import i18next from 'i18next';
 
 
@@ -61,5 +63,20 @@ var routes = [
     component: <Register />,
     layout: "/auth",
   },
+  {
+    path: "/form_new_visits",
+    name: "Registro de Nuevas visitas",
+    icon: "ni ni-tie-bow text-primary",
+    component: <Forms_visits />,
+    layout: "/panel",
+  },
+  {
+    path: "/form_vehicle",
+    name: "Registro de Vehiculos",
+    icon: "ni ni-delivery-fast text-primary",
+    component: <Form_vehicle />,
+    layout: "/panel",
+
+  }
 ];
 export default routes;
