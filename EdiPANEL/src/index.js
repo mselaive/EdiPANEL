@@ -56,8 +56,9 @@ root.render(
   <I18nextProvider i18n={i18next}>
     <BrowserRouter>
       <Routes>
-        <Route path="/panel/*" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
         <Route path="/auth/*" element={<AuthLayout />} />
+        <Route path="/panel/*" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/" element={<Navigate to="/auth" />} />
       </Routes>
     </BrowserRouter>
   </I18nextProvider>
