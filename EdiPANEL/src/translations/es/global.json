@@ -37,7 +37,7 @@
     },
     
     "routes":{
-        "main":"Home"
+        "main":"Home!"
     },
 
     "header":{
