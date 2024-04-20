@@ -1,4 +1,3 @@
-import { useState } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -31,6 +30,9 @@ import {
 
 import { useTranslation } from "react-i18next";
 import Header from "components/Headers/Header.js";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Asegúrate de instalar axios con npm install axios
+
 
 const Index = (props) => {
   const { t, i18n } = useTranslation("global");
@@ -46,6 +48,25 @@ const Index = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+  const [visitors, setVisitors] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/visitors')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setVisitors(data);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
+
   return (
     <>
       <Header />
@@ -71,40 +92,14 @@ const Index = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Alberto Saez</th>
-                    <td>4</td>
-                    <td>340</td>
-                    <td>15:56</td>
-                  </tr>
-                  <tr>
-                  <th scope="row">Roberto Díaz</th>
-                    <td>1</td>
-                    <td>140</td>
-                    <td>1:56</td>
-                  </tr>
-
-                  <tr>
-                  <th scope="row">Roberto Díaz</th>
-                    <td>1</td>
-                    <td>140</td>
-                    <td>1:56</td>
-                  </tr>
-                  
-                  <tr>
-                  <th scope="row">Roberto Díaz</th>
-                    <td>1</td>
-                    <td>140</td>
-                    <td>1:56</td>
-                  </tr>
-
-                  <tr>
-                  <th scope="row">Roberto Díaz</th>
-                    <td>1</td>
-                    <td>140</td>
-                    <td>1:56</td>
-                  </tr>
-
+                  {visitors.map((visitor, index) => (
+                    <tr key={index}>
+                      <th scope="row">{visitor.name}</th>
+                      <td>{visitor.guests}</td>
+                      <td>{visitor.building}</td>
+                      <td>{visitor.time}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Card>
