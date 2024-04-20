@@ -53,5 +53,15 @@
         "profile":"Perfil",
         "settings":"Ajustes",
         "logout":"Desconectarse"
+    },
+    "form":{
+        "form-title1":"Registro de nueva visita",
+        "form-title2": "Registro de vehiculo",
+        "apartment":"Número de departamento",
+        "visit_type": "Visita frecuente",
+        "register":"Registrar",
+        "patent":"Patente"
+
+
     }
 }
