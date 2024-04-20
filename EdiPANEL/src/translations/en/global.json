@@ -45,5 +45,15 @@
         "profile":"Profile",
         "settings":"Settings",
         "logout":"Logout"
+    },
+    "form":{
+        "form-title1":"New visitor registration",
+        "form-title2": "Vehicle registration",
+        "apartment":"Apartment number",
+        "visit_type": "Frequent visit",
+        "register":"Register",
+        "patent":"Patent"
+
+
     }
 }
