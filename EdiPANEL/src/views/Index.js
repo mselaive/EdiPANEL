@@ -92,7 +92,7 @@ const Index = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {visitors.map((visitor, index) => (
+                  {visitors.slice(0, 5).map((visitor, index) => (
                     <tr key={index}>
                       <th scope="row">{visitor.name}</th>
                       <td>{visitor.guests}</td>
