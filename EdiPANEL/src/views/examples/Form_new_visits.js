@@ -19,8 +19,9 @@ const Form_new_visits = () => {
     const { t } = useTranslation("global");
     const [visitor, setVisitor] = useState({
         name: '',
-        guests: '',
+        rut: '',
         building: '',
+        apartment: '',
         time: '',
     });
 
@@ -34,7 +35,7 @@ const Form_new_visits = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Verificar que los campos obligatorios no estén vacíos
-        if (!visitor.name || !visitor.guests || !visitor.building) {
+        if (!visitor.name || !visitor.rut || !visitor.building || !visitor.apartment) {
             alert('Por favor completa todos los campos obligatorios');
             return;
         }
@@ -94,10 +95,10 @@ const Form_new_visits = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder="invitados"
+                                        placeholder="Rut (20204164-6)"
                                         type="text"
-                                        name="guests"
-                                        value={visitor.guests}
+                                        name="rut"
+                                        value={visitor.rut}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -110,10 +111,26 @@ const Form_new_visits = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder='edificio'
-                                        type="number"
+                                        placeholder='Edificio (A, B, C)'
+                                        type="text"
                                         name="building"
                                         value={visitor.building}
+                                        onChange={handleChange}
+                                    />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup className="input-group-alternative">
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>
+                                            <i className="ni ni-building text-primary" />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input
+                                        placeholder='Apartamento'
+                                        type="number"
+                                        name="apartment"
+                                        value={visitor.apartment}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>

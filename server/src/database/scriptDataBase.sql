@@ -17,36 +17,23 @@ INSERT INTO login (username, password) VALUES
 -- Visitors
 
 	create table visitors(
+        id INT PRIMARY KEY AUTO_INCREMENT,
 		name varchar(50) not null,
-		guests varchar(50) not null,
-		building int not null,
-		time varchar(10) not null,
-        primary key(name)
+        rut varchar(50) not null,
+		building varchar(5) not null,
+        apartment int not null,
+		time varchar(10) not null
 	);
+
     
 -- Sample data
 
-INSERT INTO visitors (name, guests, building, time) VALUES 
-('John Doe', '2', 101, '10:00 AM'),
-('Jane Smith', '1', 202, '11:30 AM'),
-('Michael Johnson', '3', 303, '2:00 PM'),
-('Emily Brown', '2', 404, '3:45 PM'),
-('David Wilson', '1', 303, '5:15 PM');
-
-
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(50),
-    lastname VARCHAR(50),
-    email VARCHAR(50),
-    username VARCHAR(50),
-    role INT,
-    address VARCHAR(50),
-    city VARCHAR(50),
-    country VARCHAR(50)
-);
-
-CREATE TABLE roles (
-    id INT PRIMARY KEY,
-    name VARCHAR(50)
-);
+-- Insertar datos falsos en la tabla visitors con RUTs chilenos
+INSERT INTO visitors (name, rut, building, apartment, time) VALUES 
+('John Smith', '12345678-9', 'A', 303, '2:30 PM'),
+('Emily Johnson', '87654321-0', 'B', 201, '3:15 PM'),
+('Michael Brown', '45678901-2', 'C', 405, '1:45 PM'),
+('Sarah Davis', '98765432-1', 'A', 102, '4:00 PM'),
+('Robert Martinez', '21098765-3', 'B', 304, '2:20 PM'),
+('Jennifer Wilson', '54321098-4', 'C', 103, '3:30 PM'),
+('Christopher Lee', '67890123-5', 'A', 202, '5:00 PM');
