@@ -52,12 +52,17 @@
         "message":"¡Bienvenido!",
         "profile":"Perfil",
         "settings":"Ajustes",
-        "logout":"Desconectarse"
+        "logout":"Desconectarse",
+        "userprofile":"Perfil de Usuario",
+        "home":"Inicio",
+        "admin":"Administrador"
+        
     },
     "form":{
-        "form-title1":"Registro de nueva visita",
-        "form-title2": "Registro de vehiculo",
-        "apartment":"Número de departamento",
+        "form-title1":"Registro de Nueva Visita",
+        "form-title2": "Registro de Vehiculo",
+        "form-title3": "Registro de Visitas Frecuentes",
+        "apartment":"Número de Departamento",
         "visit_type": "Visita frecuente",
         "register":"Registrar",
         "patent":"Patente"

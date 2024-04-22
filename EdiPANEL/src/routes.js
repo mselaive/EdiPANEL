@@ -8,31 +8,17 @@ import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Forms_visits from "views/examples/Form_new_visits.js";
 import Form_vehicle from "views/examples/Form_vehicle.js";
+import Frecuent_visit from 'views/examples/Frecuent_visits';
 import i18next from 'i18next';
 
 
 var routes = [
-
+  
   {
     path: "/index",
     name: "Inicio",
     icon: "ni ni-tv-2 text-primary",
     component: <Index />,
-    layout: "/panel",
-  },
-
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
-    layout: "/panel",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
     layout: "/panel",
   },
   {
@@ -43,29 +29,16 @@ var routes = [
     layout: "/panel",
   },
   {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/panel",
-  },
-  {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
     component: <Login />,
     layout: "/auth",
   },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: <Register />,
-    layout: "/auth",
-  },
+  
   {
     path: "/form_new_visits",
-    name: "Registro de Nuevas visitas",
+    name: "form:form-title1",
     icon: "ni ni-tie-bow text-primary",
     component: <Forms_visits />,
     layout: "/panel",
@@ -77,6 +50,59 @@ var routes = [
     component: <Form_vehicle />,
     layout: "/panel",
 
-  }
+  },
+  {
+    path: "/frecuent_visits",
+    name: "Registro de Visitas Frecuentes",
+    icon: "ni ni-tie-bow text-primary",
+    component: <Frecuent_visit />,
+    layout: "/panel",
+  },
 ];
+
+export const routes_admin = [
+
+  {
+    path: "/index",
+    name: "sidebar.home",
+    icon: "ni ni-tv-2 text-primary",
+    component: <Index />,
+    layout: "/panel",
+  },
+  {
+    path: "/user-profile",
+    name: "sidebar.userprofile",
+    icon: "ni ni-single-02 text-yellow",
+    component: <Profile />,
+    layout: "/panel",
+  },
+  {
+    path: "/form_new_visits",
+    name: "form.form-title1",
+    icon: "ni ni-tie-bow text-primary",
+    component: <Forms_visits />,
+    layout: "/panel",
+  },
+  {
+    path: "/form_vehicle",
+    name: "form.form-title2",
+    icon: "ni ni-delivery-fast text-primary",
+    component: <Form_vehicle />,
+    layout: "/panel",
+
+  },
+
+ 
+];
+export const routes2 = [
+  {
+    path: "/frecuent_visits",
+    name: "form.form-title3",
+    icon: "ni ni-tie-bow text-primary",
+    component: <Frecuent_visit />,
+    layout: "/panel",
+  }
+  
+];
+
 export default routes;

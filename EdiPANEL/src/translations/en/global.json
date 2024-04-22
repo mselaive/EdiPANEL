@@ -49,11 +49,15 @@
         "message":"Welcome",
         "profile":"Profile",
         "settings":"Settings",
-        "logout":"Logout"
+        "logout":"Logout",
+        "userprofile":"User profile",
+        "home":"Home",
+        "admin":"Admin"
     },
     "form":{
-        "form-title1":"New visitor registration",
+        "form-title1":"New Visitor Registration",
         "form-title2": "Vehicle registration",
+        "form-title3": "Frequent Visit Registration",
         "apartment":"Apartment number",
         "visit_type": "Frequent visit",
         "register":"Register",

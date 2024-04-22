@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import {  
     Button,
     Card,
+    CardHeader,
     CardBody,
     FormGroup,
     Form,
@@ -12,64 +12,28 @@ import {
     InputGroup,
     Row,
     Col,
+    Container,
+
 } from "reactstrap";
+// core components
 import Header from "components/Headers/Header.js";
 
-const Form_new_visits = () => {
+  const Frecuent_visit = () => {
     const { t } = useTranslation("global");
-    const [visitor, setVisitor] = useState({
-        name: '',
-        guests: '',
-        building: '',
-        time: '',
-    });
-
-    const handleChange = (e) => {
-        setVisitor({
-            ...visitor,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // Verificar que los campos obligatorios no estén vacíos
-        if (!visitor.name || !visitor.guests || !visitor.building) {
-            alert('Por favor completa todos los campos obligatorios');
-            return;
-        }
-        const visitorWithTime = {
-            ...visitor,
-            time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
-        };
-        try {
-            const response = await fetch('http://localhost:3001/addVisitor', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(visitorWithTime),
-            });
-            const data = await response.json();
-            //console.log(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     return (
         <>
         <Header />
         {/* Page content */}
+        
         <Row className="d-flex justify-content-center align-items-center ">
         <Col lg="6" md="10"> 
             <Card className="bg-secondary shadow border-0">
                 <CardBody className="px-lg-5 py-lg-5">
                     <div className="text-center text-muted mb-4">
                         <div className="text-center text-muted mb-4">
-                            <big>{t('form.form-title1')}</big>
+                            <big>{t('form.form-title2')}</big>
                         </div>
-                        <Form role="form" onSubmit={handleSubmit}>
+                        <Form role="form">
                             <FormGroup className="mb-3">
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
@@ -80,9 +44,7 @@ const Form_new_visits = () => {
                                     <Input
                                         placeholder={t('index.commun-title')}
                                         type="text"
-                                        name="name"
-                                        value={visitor.name}
-                                        onChange={handleChange}
+                                        
                                     />
                                 </InputGroup>
                             </FormGroup>
@@ -94,11 +56,9 @@ const Form_new_visits = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder="invitados"
+                                        placeholder="12345678-9"
                                         type="text"
-                                        name="guests"
-                                        value={visitor.guests}
-                                        onChange={handleChange}
+                                        
                                     />
                                 </InputGroup>
                             </FormGroup>
@@ -110,27 +70,43 @@ const Form_new_visits = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder='edificio'
+                                        placeholder={t('form.apartment')}
                                         type="number"
-                                        name="building"
-                                        value={visitor.building}
-                                        onChange={handleChange}
+                                        
+                                    />
+                                </InputGroup>
+                                
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup className="input-group-alternative">
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>
+                                            <i className="ni ni-cart text-primary" />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input
+                                        placeholder={t('form.patent')}
+                                        type="text"
+                                        
                                     />
                                 </InputGroup>
                             </FormGroup>
                             <div className="text-center">
-                                <Button className="my-4" color="primary" type="submit">
+                                <Button className="my-4" color="primary" type="button">
                                 {t("form.register")}
                                 </Button>
                             </div>
+                            
                         </Form>
                     </div>
                 </CardBody>
             </Card>
         </Col>
     </Row>
+       
         </>
     );
-}
-
-export default Form_new_visits;
+    
+    
+  }
+  export default Frecuent_visit;
