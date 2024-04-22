@@ -92,12 +92,12 @@ const Index = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {visitors.slice(0, 5).map((visitor, index) => (
+                  {visitors.slice(0, 10).map((visitor, index) => (
                     <tr key={index}>
                       <th scope="row">{visitor.name}</th>
                       <td>{visitor.guests}</td>
                       <td>{visitor.building}</td>
-                      <td>{visitor.time}</td>
+                      <td>{visitor.time.toString()}</td>
                     </tr>
                   ))}
                 </tbody>

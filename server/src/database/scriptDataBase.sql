@@ -32,3 +32,21 @@ INSERT INTO visitors (name, guests, building, time) VALUES
 ('Michael Johnson', '3', 303, '2:00 PM'),
 ('Emily Brown', '2', 404, '3:45 PM'),
 ('David Wilson', '1', 303, '5:15 PM');
+
+
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    email VARCHAR(50),
+    username VARCHAR(50),
+    role INT,
+    address VARCHAR(50),
+    city VARCHAR(50),
+    country VARCHAR(50)
+);
+
+CREATE TABLE roles (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
