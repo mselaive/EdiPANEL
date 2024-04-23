@@ -24,8 +24,30 @@ const Form_new_visits = () => {
         apartment: '',
         time: '',
     });
+    const Fn = {
+        validaRut: function(rutCompleto) {
+            if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
+                return false;
+            var tmp = rutCompleto.split('-');
+            var digv = tmp[1];
+            var rut = tmp[0];
+            if (digv == 'K') digv = 'k';
+            return (Fn.dv(rut) == digv);
+        },
+        dv: function(T) {
+            var M = 0,
+                S = 1;
+            for (; T; T = Math.floor(T / 10))
+                S = (S + T % 10 * (9 - M++ % 6)) % 11;
+            return S ? S - 1 : 'k';
+        }
+    }
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        
+        
         setVisitor({
             ...visitor,
             [e.target.name]: e.target.value,
@@ -36,11 +58,18 @@ const Form_new_visits = () => {
         e.preventDefault();
         // Verificar que los campos obligatorios no estén vacíos
         if (!visitor.name || !visitor.rut || !visitor.building || !visitor.apartment) {
-            alert('Por favor completa todos los campos obligatorios');
+            alert(t('alert.alert2'));
             return;
         }
+        
+        if (!Fn.validaRut(visitor.rut)) {
+            alert(t('alert.alert1'));
+            return;
+        }
+    
         const visitorWithTime = {
             ...visitor,
+            building: visitor.building.toUpperCase(),
             time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
         };
         try {
@@ -52,7 +81,14 @@ const Form_new_visits = () => {
                 body: JSON.stringify(visitorWithTime),
             });
             const data = await response.json();
-            //console.log(data);
+            console.log(data);
+            setVisitor({
+                name: '',
+                rut: '',
+                building: '',
+                apartment: '',
+                // Add any other fields you have in your initial state
+            });
         } catch (error) {
             console.error(error);
         }
@@ -62,7 +98,7 @@ const Form_new_visits = () => {
         <>
         <Header />
         {/* Page content */}
-        <Row className="d-flex justify-content-center align-items-center ">
+        <Row className="pt-3  d-flex justify-content-center align-items-center ">
         <Col lg="6" md="10"> 
             <Card className="bg-secondary shadow border-0">
                 <CardBody className="px-lg-5 py-lg-5">
@@ -111,7 +147,7 @@ const Form_new_visits = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder='Edificio (A, B, C)'
+                                        placeholder={t('form.building')}
                                         type="text"
                                         name="building"
                                         value={visitor.building}
@@ -127,7 +163,7 @@ const Form_new_visits = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder='Apartamento'
+                                        placeholder={t('form.apartment')}
                                         type="number"
                                         name="apartment"
                                         value={visitor.apartment}

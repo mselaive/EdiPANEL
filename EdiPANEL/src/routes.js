@@ -9,6 +9,7 @@ import Icons from "views/examples/Icons.js";
 import Forms_visits from "views/examples/Form_new_visits.js";
 import Form_vehicle from "views/examples/Form_vehicle.js";
 import Frecuent_visit from 'views/examples/Frecuent_visits';
+import Form_delivery from 'views/examples/Form_delivery';
 import i18next from 'i18next';
 
 
@@ -58,6 +59,13 @@ var routes = [
     component: <Frecuent_visit />,
     layout: "/panel",
   },
+  {
+    path:"/form_delivery",
+    name:"Registro de Entrega",
+    icon:"ni ni-delivery-fast text-primary",
+    component:<Form_delivery />,
+    layout:"/panel"
+  }
 ];
 
 export const routes_admin = [
@@ -91,6 +99,13 @@ export const routes_admin = [
     layout: "/panel",
 
   },
+  {
+    path:"/form_delivery",
+    name:"form.form-title4",
+    icon:"ni ni-box-2 text-primary",
+    component:<Form_delivery />,
+    layout:"/panel"
+  }
 
  
 ];

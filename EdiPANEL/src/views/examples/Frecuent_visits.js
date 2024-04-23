@@ -25,7 +25,7 @@ import Header from "components/Headers/Header.js";
         <Header />
         {/* Page content */}
         
-        <Row className="d-flex justify-content-center align-items-center ">
+        <Row className="pt-3 d-flex justify-content-center align-items-center ">
         <Col lg="6" md="10"> 
             <Card className="bg-secondary shadow border-0">
                 <CardBody className="px-lg-5 py-lg-5">

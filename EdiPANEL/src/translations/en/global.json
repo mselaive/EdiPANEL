@@ -52,17 +52,28 @@
         "logout":"Logout",
         "userprofile":"User profile",
         "home":"Home",
-        "admin":"Admin"
+        "admin":"Admin",
+        "resident":"Residents"
     },
     "form":{
         "form-title1":"New Visitor Registration",
         "form-title2": "Vehicle registration",
         "form-title3": "Frequent Visit Registration",
-        "apartment":"Apartment number",
+        "form-title4": "Delivery Registration",
+        "apartment":"Apartment Number",
         "visit_type": "Frequent visit",
         "register":"Register",
-        "patent":"Patent"
+        "patent":"Patent",
+        "building":"Building (A, B, C)",
+        "delivery":"Delivery for...",
+        "mail":"Send To Email",
+        "wsp":"Send to WhatsApp"
 
+
+    },
+    "alert":{
+        "alert1":"The RUT field is not valid",
+        "alert2":"Please complete all fields"
 
     }
 }

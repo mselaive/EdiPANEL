@@ -230,13 +230,15 @@ const Sidebar = (props) => {
             </Row>
           </div>
           {/* Form */}
-
+          <hr className="my-3" />
+          {/* Heading */}
+          <h6 className="navbar-heading text-muted">{t('sidebar.admin')}</h6> 
           {/* Navigation */}
           <Nav navbar>{createLinks(routes_admin)}</Nav>
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">{t('sidebar.admin')}</h6>
+          <h6 className="navbar-heading text-muted">{t('sidebar.resident')}</h6>
           {/* Navigation */}
           <Nav navbar>{createLinks2(routes2)}</Nav>
           

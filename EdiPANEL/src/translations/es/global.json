@@ -55,18 +55,31 @@
         "logout":"Desconectarse",
         "userprofile":"Perfil de Usuario",
         "home":"Inicio",
-        "admin":"Administrador"
+        "admin":"Administrador",
+        "resident":"Residentes"
+
         
     },
     "form":{
         "form-title1":"Registro de Nueva Visita",
         "form-title2": "Registro de Vehiculo",
         "form-title3": "Registro de Visitas Frecuentes",
+        "form-title4": "Registro de Delivery",
         "apartment":"Número de Departamento",
-        "visit_type": "Visita frecuente",
+        "visit_type": "Visita Frecuente",
         "register":"Registrar",
-        "patent":"Patente"
+        "patent":"Patente",
+        "building":"Edificio (A, B, C)",
+        "delivery":"Delivery para...",
+        "mail":"Enviar por Correo",
+        "wsp":"Enviar por Whatsapp"
 
+
+    },
+    "alert":{
+        "alert1": "El campo RUT no es válido",
+        "alert2": "Por favor completa todos los campos"
 
     }
+
 }
