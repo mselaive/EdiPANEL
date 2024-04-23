@@ -10,7 +10,7 @@
     "auth":{
         "title-auth":"Welcome!",
         "desc-auth":"Welcome to the EdiPANEL company management platform, please log in.",
-        "box-title":"Logins",
+        "box-title":"Login",
         "box-email":"Email",
         "box-pass":"Password",
         "box-remember":"Remember",
