@@ -1,6 +1,7 @@
 const connection = require('../models/db');
+
 module.exports.getResident = (req, res) => {
-    const { buildingLetter, apartmentNumber } = req.params;
+    const { buildingLetter, apartmentNumber } = req.body;
     const consult = 'SELECT * FROM residents WHERE building = ? AND apartment_number = ?';
 
     try {

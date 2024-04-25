@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {  
     Button,
@@ -42,15 +42,14 @@ import Header from "components/Headers/Header.js";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-    
+        alert('A name was submitted: ' + apartment.building + ' ' + apartment.apa);
         try {
-            const response = await fetch('http://localhost:3001/getResident', {
-                method: 'PUT', // or 'PUT'
+            const response = await fetch('http://localhost:3001/resident', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(apartment),
+                body: JSON.stringify(apartment), // Aquí es donde envías los datos
             });
     
             if (!response.ok) {
@@ -58,20 +57,14 @@ import Header from "components/Headers/Header.js";
             }
     
             const data = await response.json();
-            console.log(data);
-            alert(data);
             setResidents(data);
-            setApartment({
-                building: '',
-                number: '',
-            });
         } catch (error) {
             console.error('There was an error!', error);
         }
+        
+        //setShowSecondForm(true);
     };
-    const handleClick = () => {
-      setShowSecondForm(true);
-    };
+
 
 
     const handleSecondClick = () => {
@@ -100,7 +93,7 @@ import Header from "components/Headers/Header.js";
                         <Form role="form" onSubmit={handleSubmit}>
                             {!showSecondForm && (
                             <div>  
-                            <FormGroup>
+                            <FormGroup >
                                     <InputGroup className="input-group-alternative">
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
@@ -138,7 +131,7 @@ import Header from "components/Headers/Header.js";
 
                                 
                                 <div className="text-center" >
-                                    <Button className="my-4" color="primary" type="button" onClick={handleClick}>
+                                    <Button className="my-4" color="primary" type="submit" >
                                     {t("form.register")}
                                     </Button>
                                 </div>
