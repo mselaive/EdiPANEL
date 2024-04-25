@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
 
+// Componente Formulario para agregar visitas
 const Form_new_visits = () => {
     const { t } = useTranslation("global");
     const [visitor, setVisitor] = useState({
@@ -24,6 +25,8 @@ const Form_new_visits = () => {
         apartment: '',
         time: '',
     });
+
+    // Función para validar el rut
     const Fn = {
         validaRut: function(rutCompleto) {
             if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
@@ -42,8 +45,9 @@ const Form_new_visits = () => {
             return S ? S - 1 : 'k';
         }
     }
-
+    
     const handleChange = (e) => {
+        // Obtenemos el name y value del input
         const { name, value } = e.target;
 
         
@@ -87,7 +91,7 @@ const Form_new_visits = () => {
                 rut: '',
                 building: '',
                 apartment: '',
-                // Add any other fields you have in your initial state
+                
             });
         } catch (error) {
             console.error(error);

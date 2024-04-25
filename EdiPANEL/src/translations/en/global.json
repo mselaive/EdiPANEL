@@ -68,12 +68,14 @@
         "delivery":"Delivery for...",
         "mail":"Send To Email",
         "wsp":"Send to WhatsApp"
+        
 
 
     },
     "alert":{
         "alert1":"The RUT field is not valid",
-        "alert2":"Please complete all fields"
+        "alert2":"Please complete all fields",
+        "alert3":"Notification sent"
 
     }
 }

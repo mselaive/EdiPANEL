@@ -24,9 +24,23 @@ INSERT INTO login (username, password) VALUES
         apartment int not null,
 		time varchar(10) not null
 	);
-
-    
+	CREATE TABLE residents(
+		id INT NOT NULL PRIMARY KEY AUTO_INCREMENT ,
+		resident_name VARCHAR(50) NOT NULL ,
+		apartment_number INT NOT NULL ,
+		building CHAR(1) NOT NULL ,
+		email VARCHAR(50) ,
+		whatsapp VARCHAR(50)
+		) ;
 -- Sample data
+-- insertar datos de residentes
+INSERT INTO residents (resident_name, apartment_number, building, email, whatsapp) VALUES 
+('Carlos Serra', '101', 'A','carloosserra@gmail.com','+56982076323'),
+('Carlos Serra', '101', 'B','carloosserra@gmail.com','+56982076323'),
+('Carlos Serra', '101', 'C','carloosserra@gmail.com','+56982076323'),
+('Matias Selaive', '101', 'A','carloosserra@gmail.com','+56982076323');
+    
+
 
 -- Insertar datos falsos en la tabla visitors con RUTs chilenos
 INSERT INTO visitors (name, rut, building, apartment, time) VALUES 
