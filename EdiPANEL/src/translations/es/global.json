@@ -16,7 +16,8 @@
         "box-remember":"Recordar",
         "box-login":"Iniciar",
         "forgot-auth":"¿Te olvidaste?",
-        "register-auth":"Crear nueva cuenta"
+        "register-auth":"Crear nueva cuenta",
+        "alert":"Nombre de usuario o contraseña incorrectos"
     },
     "navbar-auth":{
         "register":"Registro",

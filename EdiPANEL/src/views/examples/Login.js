@@ -12,6 +12,7 @@ import {
   InputGroup,
   Row,
   Col,
+  Alert
 } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -32,6 +33,30 @@ const Login = () => {
   const navigate = useNavigate();
   const[password, setPassword] = useState("");
   const[username, setUsername] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertColor, setAlertColor] = useState('');
+  
+  const [timeoutId, setTimeoutId] = useState(null);
+  //  Mostrar una alerta durante un tiempo determinado
+  const showAlertWithTimeout = (message, color) => {
+      setAlertMessage(message);
+      setAlertColor(color);
+      setShowAlert(true);
+  
+      // Cancelar el temporizador anterior
+      if (timeoutId) {
+          clearTimeout(timeoutId);
+      }
+  
+      // Iniciar un nuevo temporizador
+      const newTimeoutId = setTimeout(() => {
+          setShowAlert(false);
+      }, 5000); // 5 segundos
+  
+      // Guardar el identificador del nuevo temporizador
+      setTimeoutId(newTimeoutId);
+  };
 
 
   const { t } = useTranslation("global");
@@ -64,6 +89,7 @@ const Login = () => {
           navigate('/panel')
         }else{
           console.log("no hay token")
+          showAlertWithTimeout(t("auth.alert"), 'danger');
         }
       })
       .catch(error => {
@@ -129,6 +155,11 @@ const Login = () => {
                   {t("auth.box-login")}
                 </Button>
               </div>
+              {showAlert && (
+                                    <Alert color={alertColor}>
+                                    {alertMessage}
+                                    </Alert>
+                                )}
             </Form>
           </CardBody>
         </Card>
