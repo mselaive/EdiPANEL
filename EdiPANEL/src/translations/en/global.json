@@ -87,5 +87,22 @@
         "alert9":"Registered visit"
         
 
+    },
+
+    "profile":{
+        "welcome": "Welcome!",
+        "description": "Here you can see your profile in the EdiPANEL application, as well as your initial data.",
+        "logout": "Logout",
+        "nameright": "Janitor - Admin",
+        "account": "My Account",
+        "userinfo": "User Information",
+        "username": "Username",
+        "email": "Email",
+        "firstname": "First Name",
+        "lastname": "Last Name",
+        "accountinfo": "Account Information",
+        "building": "Building",
+        "apartment": "Apartment",
+        "role": "Role"
     }
 }

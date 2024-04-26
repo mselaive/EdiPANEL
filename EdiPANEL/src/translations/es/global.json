@@ -83,12 +83,14 @@
         "alert1": "El campo RUT no es válido",
         "alert2": "Por favor completa todos los campos",
         "alert3": "Notificación enviada",
+        
         "alert4": "No se han encontrado residentes",
         "alert5": "Por favor seleccione al menos una opción",
         "alert6": "Correo enviado a:",
         "alert7": "y Whatsapp enviado a:",
         "alert8": "Whatsapp enviado a:",
         "alert9": "Visita registrada"
+
     }
 
 }
