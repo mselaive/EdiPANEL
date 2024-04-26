@@ -67,7 +67,10 @@
         "building":"Building (A, B, C)",
         "delivery":"Delivery for...",
         "mail":"Send To Email",
-        "wsp":"Send to WhatsApp"
+        "wsp":"Send to WhatsApp",
+        "back":"Back",
+        "send":"Send",
+        "search":"Search"
         
 
 
@@ -75,7 +78,14 @@
     "alert":{
         "alert1":"The RUT field is not valid",
         "alert2":"Please complete all fields",
-        "alert3":"Notification sent"
+        "alert3":"Notification sent",
+        "alert4":"No residents found",
+        "alert5":"Please select at least one option",
+        "alert6":"Sending email to:",
+        "alert7":" and sending WhatsApp to:",
+        "alert8":"Sending WhatsApp to:",
+        "alert9":"Registered visit"
+        
 
     }
 }

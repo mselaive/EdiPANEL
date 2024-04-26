@@ -12,6 +12,7 @@ import {
     InputGroup,
     Row,
     Col,
+    Alert
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
 
@@ -25,6 +26,29 @@ const Form_new_visits = () => {
         apartment: '',
         time: '',
     });
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertColor, setAlertColor] = useState('');
+    const [timeoutId, setTimeoutId] = useState(null);
+
+    const showAlertWithTimeout = (message, color) => {
+        setAlertMessage(message);
+        setAlertColor(color);
+        setShowAlert(true);
+
+        // Cancelar el temporizador anterior
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        // Iniciar un nuevo temporizador
+        const newTimeoutId = setTimeout(() => {
+            setShowAlert(false);
+        }, 3000); // 3 segundos
+
+        // Guardar el identificador del nuevo temporizador
+        setTimeoutId(newTimeoutId);
+    };
 
     // Función para validar el rut
     const Fn = {
@@ -62,12 +86,12 @@ const Form_new_visits = () => {
         e.preventDefault();
         // Verificar que los campos obligatorios no estén vacíos
         if (!visitor.name || !visitor.rut || !visitor.building || !visitor.apartment) {
-            alert(t('alert.alert2'));
+            showAlertWithTimeout(t('alert.alert2'), 'warning');
             return;
         }
         
         if (!Fn.validaRut(visitor.rut)) {
-            alert(t('alert.alert1'));
+            showAlertWithTimeout(t('alert.alert1') , 'warning');
             return;
         }
     
@@ -93,6 +117,7 @@ const Form_new_visits = () => {
                 apartment: '',
                 
             });
+            showAlertWithTimeout(t('alert.alert9'), 'success');
         } catch (error) {
             console.error(error);
         }
@@ -180,6 +205,11 @@ const Form_new_visits = () => {
                                 {t("form.register")}
                                 </Button>
                             </div>
+                            {showAlert && (
+                                    <Alert color={alertColor}>
+                                    {alertMessage}
+                                    </Alert>
+                                )}
                         </Form>
                     </div>
                 </CardBody>

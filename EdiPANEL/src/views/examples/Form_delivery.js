@@ -15,7 +15,8 @@ import {
     Row,
     Col,
     Container,
-    Alert
+    Alert,
+    UncontrolledAlert
 
 } from "reactstrap";
 
@@ -34,7 +35,29 @@ import Header from "components/Headers/Header.js";
     const [checkbox2, setCheckbox2] = useState(false);
     const [selectedEmail, setSelectedEmail] = useState('');
     const [selectedWhatsApp, setSelectedWhatsApp] = useState('');
-   
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertColor, setAlertColor] = useState('');
+    
+    const [timeoutId, setTimeoutId] = useState(null);
+    const showAlertWithTimeout = (message, color) => {
+        setAlertMessage(message);
+        setAlertColor(color);
+        setShowAlert(true);
+    
+        // Cancelar el temporizador anterior
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+    
+        // Iniciar un nuevo temporizador
+        const newTimeoutId = setTimeout(() => {
+            setShowAlert(false);
+        }, 3000); // 3 segundos
+    
+        // Guardar el identificador del nuevo temporizador
+        setTimeoutId(newTimeoutId);
+    };
+    
     const handleChange = (e) => {
     
         const { name, value } = e.target;
@@ -47,6 +70,10 @@ import Header from "components/Headers/Header.js";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!apartment.building || !apartment.apa) {
+            showAlertWithTimeout(t('alert.alert2'), 'warning');
+            return;
+        }
         
         try {
             const response = await fetch(`http://localhost:3001/residents/${apartment.building}/${apartment.apa}`, {
@@ -60,23 +87,26 @@ import Header from "components/Headers/Header.js";
                 throw new Error('Network response was not ok');
             }
     
-            const data = await response.json(); 
+            const data = await response.json();
+            if (!Array.isArray(data) || data.length === 0) {
+                showAlertWithTimeout(t('alert.alert4'), 'warning');
+                return;
+            }
+            console.log(data);
             setSelectedEmail(data[0].email);
-            setSelectedWhatsApp(data[0].whatsapp)
+            setSelectedWhatsApp(data[0].whatsapp);
             setResidents(data);
+            
             console.log(selectedEmail);
             console.log(selectedWhatsApp);
   
            
-            if (data.length === 0) {
-                alert('No data returned from API');
-                return;
-            }
+            
             console.log(data);
         } catch (error) {
             console.error('There was an error!', error);
-        }
-        ;
+        };
+         // 3 segundos
         
         setShowSecondForm(true);
     };
@@ -85,25 +115,26 @@ import Header from "components/Headers/Header.js";
             e.preventDefault();
         
             if (!checkbox1 && !checkbox2) {
-                alert('Please select at least one checkbox');
+                showAlertWithTimeout(t('alert.alert5'), 'warning');
                 return;
+            } else if (checkbox1 && !checkbox2) {
+                showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail}`, 'success');
+                
+                
+            } else if (checkbox2 && !checkbox1) {
+                showAlertWithTimeout(`${t('alert.alert8')} ${selectedWhatsApp}`, 'success');
+                
+            } else if (checkbox1 && checkbox2) {
+                showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
             }
-            if (checkbox1&& !checkbox2) {
-                alert(`Sending email to ${selectedEmail}`);
-            }
-            if (checkbox2 && !checkbox1) {
-                alert(`Sending WhatsApp message to ${selectedWhatsApp}`);
-            }
-            if (checkbox1 && checkbox2) {   
-                alert(`Sending email to ${selectedEmail} and WhatsApp message to ${selectedWhatsApp}`);
-            }
+            setSelectedEmail('');
+            setSelectedWhatsApp('');
+    
             setShowSecondForm(false);
             setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000); // 3 segundos
+            
         };
-            // Rest of your code...
+      
     
     const handleSelectChange = (event) => {
         const [email, whatsapp] = event.target.value.split('|');
@@ -173,7 +204,7 @@ import Header from "components/Headers/Header.js";
                                 
                                 <div className="text-center" >
                                     <Button className="my-4" color="primary" type="submit" >
-                                    {t("form.register")}
+                                    {t("form.search")}
                                     </Button>
                                 </div>
                             </div>
@@ -232,28 +263,31 @@ import Header from "components/Headers/Header.js";
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div className="text-center" >
                                     <Button className="my-4" color="primary" type="submit" >
-                                    {t("form.register")}
+                                    {t("form.send")}
                                     </Button>
                                     <Button
                                         color="primary"
                                         href="#pablo"
                                         onClick={e => {
                                             e.preventDefault();
+                                            
+                                            setResidents([]);
                                             setShowSecondForm(false);
                                         }}
                                     >
-                                        Back
+                                    {t("form.back")}
                                     </Button>
                                 </div>
                             </div>
                             )}
                             {showAlert && (
-                                <Alert color="success">
-                                {t("alert.alert3")}
-                                </Alert>
-                            )}
+                                    <Alert color={alertColor}>
+                                    {alertMessage}
+                                    </Alert>
+                                )}
                         </Form>
                     </div>
                 </CardBody>
