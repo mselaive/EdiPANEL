@@ -35,10 +35,21 @@ INSERT INTO login (username, password) VALUES
 -- Sample data
 -- insertar datos de residentes
 INSERT INTO residents (resident_name, apartment_number, building, email, whatsapp) VALUES 
-('Carlos Serra', '101', 'A','carloosserra@gmail.com','+56982076323'),
-('Carlos Serra', '101', 'B','carloosserra@gmail.com','+56982076323'),
+INSERT INTO residents (resident_name, apartment_number, building, email, whatsapp) VALUES 
+('Carlos Serra', '101', 'A','carloos@gmail.com','+56982076323'),
+('Carlos Serra', '101', 'B','serra@gmail.com','+56982076323'),
 ('Carlos Serra', '101', 'C','carloosserra@gmail.com','+56982076323'),
-('Matias Selaive', '101', 'A','carloosserra@gmail.com','+56982076323');
+('Matias Selaive', '101', 'A','carloosserra@gmail.com','+56982076323'),
+('Juan Perez', '101', 'A', 'juanperez@gmail.com', '+56982076324'),
+('Maria Lopez', '101', 'B', 'marialopez@gmail.com', '+56982076325'),
+('Pedro Rodriguez', '101', 'C', 'pedrorodriguez@gmail.com', '+56982076326'),
+('Ana Martinez', '101', 'D', 'anamartinez@gmail.com', '+56982076327'),
+('Luisa Fernandez', '101', 'B', 'luisafernandez@gmail.com', '+56982076328'),
+('Carlos Gomez', '101', 'A', 'carlosgomez@gmail.com', '+56982076329'),
+('Laura Sanchez', '101', 'C', 'laurasanchez@gmail.com', '+56982076330'),
+('Jorge Ramirez', '101', 'A', 'jorgeramirez@gmail.com', '+56982076331'),
+('Marta Gonzalez', '101', 'B', 'martagonzalez@gmail.com', '+56982076332'),
+('David Torres', '101', 'C', 'davidtorres@gmail.com', '+56982076333');
     
 
 
