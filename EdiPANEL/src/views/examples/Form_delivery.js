@@ -30,6 +30,11 @@ import Header from "components/Headers/Header.js";
         apa: '',
     });
     const [residents, setResidents] = useState([]);
+    const [checkbox1, setCheckbox1] = useState(false);
+    const [checkbox2, setCheckbox2] = useState(false);
+    const [selectedEmail, setSelectedEmail] = useState('');
+    const [selectedWhatsApp, setSelectedWhatsApp] = useState('');
+   
     const handleChange = (e) => {
     
         const { name, value } = e.target;
@@ -42,38 +47,74 @@ import Header from "components/Headers/Header.js";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('A name was submitted: ' + apartment.building + ' ' + apartment.apa);
+        
         try {
-            const response = await fetch('http://localhost:3001/resident', {
-                method: 'POST',
+            const response = await fetch(`http://localhost:3001/residents/${apartment.building}/${apartment.apa}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(apartment), // Aquí es donde envías los datos
             });
-    
+            
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
     
-            const data = await response.json();
+            const data = await response.json(); 
+            setSelectedEmail(data[0].email);
+            setSelectedWhatsApp(data[0].whatsapp)
             setResidents(data);
+            console.log(selectedEmail);
+            console.log(selectedWhatsApp);
+  
+           
+            if (data.length === 0) {
+                alert('No data returned from API');
+                return;
+            }
+            console.log(data);
         } catch (error) {
             console.error('There was an error!', error);
         }
+        ;
         
-        //setShowSecondForm(true);
+        setShowSecondForm(true);
     };
 
-
-
-    const handleSecondClick = () => {
-        setShowSecondForm(false);
-        setShowAlert(true);
-        setTimeout(() => {
-            setShowAlert(false);
-          }, 3000); // 3 segundos
-      };
+    const handleSubmit2 = async (e) => {
+            e.preventDefault();
+        
+            if (!checkbox1 && !checkbox2) {
+                alert('Please select at least one checkbox');
+                return;
+            }
+            if (checkbox1&& !checkbox2) {
+                alert(`Sending email to ${selectedEmail}`);
+            }
+            if (checkbox2 && !checkbox1) {
+                alert(`Sending WhatsApp message to ${selectedWhatsApp}`);
+            }
+            if (checkbox1 && checkbox2) {   
+                alert(`Sending email to ${selectedEmail} and WhatsApp message to ${selectedWhatsApp}`);
+            }
+            setShowSecondForm(false);
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000); // 3 segundos
+        };
+            // Rest of your code...
+    
+    const handleSelectChange = (event) => {
+        const [email, whatsapp] = event.target.value.split('|');
+        setSelectedEmail(email);
+        setSelectedWhatsApp(whatsapp);
+    
+        console.log(selectedEmail);
+        console.log(selectedWhatsApp);
+    };
+   
+        
 
     const { t } = useTranslation("global");
 
@@ -138,7 +179,7 @@ import Header from "components/Headers/Header.js";
                             </div>
                             )}
                         </Form>
-                        <Form role="form">
+                        <Form role="form" onSubmit={handleSubmit2}>
                             {showSecondForm && (
                             <div>
                                 <FormGroup>
@@ -148,11 +189,12 @@ import Header from "components/Headers/Header.js";
                                                 <i className="ni ni-satisfied text-primary" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <select className="form-control">
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        {/* Agrega más opciones aquí si es necesario */}
+                                        <select className="form-control" onChange={handleSelectChange}>
+                                            {residents.map((resident, index) => (
+                                                <option key={index} value={`${resident.email}|${resident.whatsapp}`}>
+                                                    {resident.resident_name}
+                                                </option>
+                                            ))}
                                         </select>
                                     </InputGroup>
                                 </FormGroup>
@@ -163,6 +205,8 @@ import Header from "components/Headers/Header.js";
                                                 className=" custom-control-input"
                                                 id="customCheck5"
                                                 type="checkbox"
+                                                checked={checkbox1}
+                                                onChange={e => setCheckbox1(e.target.checked)}
                                                 
                                             />
                                             
@@ -175,6 +219,8 @@ import Header from "components/Headers/Header.js";
                                                 className="custom-control-input"
                                                 id="customCheck6"
                                                 type="checkbox"
+                                                checked={checkbox2}
+                                                onChange={e => setCheckbox2(e.target.checked)}
                                                 
                                                 
                                             />
@@ -187,8 +233,18 @@ import Header from "components/Headers/Header.js";
                                     </div>
                                 </div>
                                 <div className="text-center" >
-                                    <Button className="my-4" color="primary" type="button" onClick={handleSecondClick}>
+                                    <Button className="my-4" color="primary" type="submit" >
                                     {t("form.register")}
+                                    </Button>
+                                    <Button
+                                        color="primary"
+                                        href="#pablo"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            setShowSecondForm(false);
+                                        }}
+                                    >
+                                        Back
                                     </Button>
                                 </div>
                             </div>

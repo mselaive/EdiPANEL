@@ -14,7 +14,7 @@ router.post('/login', login);
 
 router.post('/addvisitor', addVisitor);
 
-router.get('/resident', getResident);
+router.get('/residents/:building/:apartment_number', getResident);
 
 
 module.exports = router;

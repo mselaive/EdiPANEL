@@ -1,17 +1,15 @@
 const connection = require('../models/db');
 
 module.exports.getResident = (req, res) => {
-    const { buildingLetter, apartmentNumber } = req.body;
     const consult = 'SELECT * FROM residents WHERE building = ? AND apartment_number = ?';
-
+    
     try {
-        connection.query(consult, [buildingLetter, apartmentNumber], (err, results) => {
+        connection.query(consult, [req.params.building, req.params.apartment_number], (err, results) => {
             if (err) {
-                console.error(err);
+                console.error(err.message);
                 res.status(500).json({ error: 'An error occurred' });
                 return;
             }
-            console.log(results);
             res.json(results);
         });
     } catch (e) {
