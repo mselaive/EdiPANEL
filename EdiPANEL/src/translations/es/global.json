@@ -91,6 +91,24 @@
         "alert8": "Whatsapp enviado a:",
         "alert9": "Visita registrada"
 
+    },
+
+    "profile":{
+        "welcome": "¡Bienvenido!",
+        "description": "Aquí puedes ver tu perfil en la aplicación EdiPANEL, así como tus datos iniciales.",
+        "logout": "Cerrar sesión",
+        "nameright": "Conserje - Admin",
+        "account": "Mi cuenta",
+        "userinfo": "Información del usuario",
+        "username": "Nombre de usuario",
+        "email": "Correo electrónico",
+        "firstname": "Nombre",
+        "lastname": "Apellido",
+        "accountinfo": "Información de la cuenta",
+        "building": "Edificio",
+        "apartment": "Apartamento",
+        "role": "Rol"
     }
+    
 
 }
