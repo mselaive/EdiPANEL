@@ -35,7 +35,6 @@ INSERT INTO login (username, password) VALUES
 -- Sample data
 -- insertar datos de residentes
 INSERT INTO residents (resident_name, apartment_number, building, email, whatsapp) VALUES 
-INSERT INTO residents (resident_name, apartment_number, building, email, whatsapp) VALUES 
 ('Carlos Serra', '101', 'A','carloos@gmail.com','+56982076323'),
 ('Carlos Serra', '101', 'B','serra@gmail.com','+56982076323'),
 ('Carlos Serra', '101', 'C','carloosserra@gmail.com','+56982076323'),
