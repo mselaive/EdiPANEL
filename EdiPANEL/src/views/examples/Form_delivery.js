@@ -112,28 +112,55 @@ import Header from "components/Headers/Header.js";
     };
 
     const handleSubmit2 = async (e) => {
-            e.preventDefault();
-        
-            if (!checkbox1 && !checkbox2) {
-                showAlertWithTimeout(t('alert.alert5'), 'warning');
-                return;
-            } else if (checkbox1 && !checkbox2) {
-                showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail}`, 'success');
-                
-                
-            } else if (checkbox2 && !checkbox1) {
-                showAlertWithTimeout(`${t('alert.alert8')} ${selectedWhatsApp}`, 'success');
-                
-            } else if (checkbox1 && checkbox2) {
-                showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
-            }
-            setSelectedEmail('');
-            setSelectedWhatsApp('');
+        e.preventDefault();
     
-            setShowSecondForm(false);
-            setShowAlert(true);
-            
+        const url = 'https://graph.facebook.com/v19.0/296891826840399/messages';
+        const headers = {
+            'Authorization': 'Bearer EAAZAKFcyZCYIkBO6flzsQB2QcxIW2skHy9ZAZAIcZBJk9BkZC8FYnZCTco3HL8qrD9WxayZAvHETVe4UkLQM8XcGFT26VK8NoOZBCwEBzb9z16ncZAcgbUJ5UGMjIvekL4XvRiSqo4ziQYf5HFyux69i1eJhgRovdZA5aBsOuqpQpBlOofY0kmJbo2959OStcK0sl80',
+            'Content-Type': 'application/json'
         };
+        const data = {
+            "messaging_product": "whatsapp",
+            "to": "56974492622",
+            "type": "text",
+            "text": {
+                "preview_url": "false",
+                "body":"*Usted ha recibido un paquete/correo* \n\nEstimado/a vecino/a, \n\nLe informamos que ha recibido un paquete/correo en la conserjería. \n\nPor favor, diríjase a la conserjería para poder recibirlo lo antes posible. Gracias por su compromiso \n\n_Saludos, EdiPANEL_"
+            }
+        };
+    
+        if (!checkbox1 && !checkbox2) {
+            showAlertWithTimeout(t('alert.alert5'), 'warning');
+            return;
+        } else if (checkbox1 && !checkbox2) {
+            showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail}`, 'success');
+        } else if (checkbox2 && !checkbox1) {
+            showAlertWithTimeout(`${t('alert.alert8')} ${selectedWhatsApp}`, 'success');
+    
+            try {
+                const response = await axios.post(url, data, { headers });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+    
+        } else if (checkbox1 && checkbox2) {
+            showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
+    
+            try {
+                const response = await axios.post(url, data, { headers });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        setSelectedEmail('');
+        setSelectedWhatsApp('');
+    
+        setShowSecondForm(false);
+        setShowAlert(true);
+        
+    };
       
     
     const handleSelectChange = (event) => {
