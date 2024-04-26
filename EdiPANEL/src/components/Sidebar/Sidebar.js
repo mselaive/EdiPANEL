@@ -1,6 +1,7 @@
 /* Barra cuando se usa en modo tablet o celular */
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import  routes, {routes2, routes_admin} from '../../routes.js';
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -39,6 +40,7 @@ import {
 
 var ps;
 
+
 const Sidebar = (props) => {
   const { t, i18n } = useTranslation("global");
   const [collapseOpen, setCollapseOpen] = useState();
@@ -69,8 +71,9 @@ const Sidebar = (props) => {
     setCollapseOpen(false);
   };
   // creates the links that appear in the left menu / Sidebar
-  const createLinks = (routes) => {
-    return routes.map((prop, key) => {
+  const createLinks = (routes_admin) => {
+    
+    return routes_admin.map((prop, key) => {
       return (
         <NavItem key={key}>
           <NavLink
@@ -79,7 +82,24 @@ const Sidebar = (props) => {
             onClick={closeCollapse}
           >
             <i className={prop.icon} />
-            {prop.name}
+            {t(prop.name)}
+          </NavLink>
+        </NavItem>
+      );
+    });
+  };
+
+  const createLinks2 = (routes2) => {
+    return routes2.map((prop, key) => {
+      return (
+        <NavItem key={key}>
+          <NavLink
+            to={prop.layout + prop.path}
+            tag={NavLinkRRD}
+            onClick={closeCollapse}
+          >
+            <i className={prop.icon} />
+            {t(prop.name)}
           </NavLink>
         </NavItem>
       );
@@ -210,36 +230,18 @@ const Sidebar = (props) => {
             </Row>
           </div>
           {/* Form */}
-
+          <hr className="my-3" />
+          {/* Heading */}
+          <h6 className="navbar-heading text-muted">{t('sidebar.admin')}</h6> 
           {/* Navigation */}
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>{createLinks(routes_admin)}</Nav>
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Documentation</h6>
+          <h6 className="navbar-heading text-muted">{t('sidebar.resident')}</h6>
           {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
-                <i className="ni ni-spaceship" />
-                Inicio
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/colors?ref=adr-admin-sidebar">
-                <i className="ni ni-palette" />
-                Foundation
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
-                <i className="ni ni-ui-04" />
-                Componentsss 
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <Nav className="mb-md-3" navbar>
-          </Nav>
+          <Nav navbar>{createLinks2(routes2)}</Nav>
+          
         </Collapse>
       </Container>
     </Navbar>

@@ -16,7 +16,8 @@
         "box-remember":"Recordar",
         "box-login":"Iniciar",
         "forgot-auth":"¿Te olvidaste?",
-        "register-auth":"Crear nueva cuenta"
+        "register-auth":"Crear nueva cuenta",
+        "alert":"Nombre de usuario o contraseña incorrectos"
     },
     "navbar-auth":{
         "register":"Registro",
@@ -52,16 +53,63 @@
         "message":"¡Bienvenido!",
         "profile":"Perfil",
         "settings":"Ajustes",
-        "logout":"Desconectarse"
+        "logout":"Desconectarse",
+        "userprofile":"Perfil de Usuario",
+        "home":"Inicio",
+        "admin":"Administrador",
+        "resident":"Residentes"
+
+        
     },
     "form":{
-        "form-title1":"Registro de nueva visita",
-        "form-title2": "Registro de vehiculo",
-        "apartment":"Número de departamento",
-        "visit_type": "Visita frecuente",
+        "form-title1":"Registro de Nueva Visita",
+        "form-title2": "Registro de Vehiculo",
+        "form-title3": "Registro de Visitas Frecuentes",
+        "form-title4": "Registro de Delivery",
+        "apartment":"Número de Departamento",
+        "visit_type": "Visita Frecuente",
         "register":"Registrar",
-        "patent":"Patente"
+        "patent":"Patente",
+        "building":"Edificio (A, B, C)",
+        "delivery":"Delivery para...",
+        "mail":"Enviar por Correo",
+        "wsp":"Enviar por Whatsapp",
+        "back":"Volver",
+        "send":"Enviar",
+        "search":"Buscar"
 
 
+    },
+    "alert":{
+        "alert1": "El campo RUT no es válido",
+        "alert2": "Por favor completa todos los campos",
+        "alert3": "Notificación enviada",
+        
+        "alert4": "No se han encontrado residentes",
+        "alert5": "Por favor seleccione al menos una opción",
+        "alert6": "Correo enviado a:",
+        "alert7": "y Whatsapp enviado a:",
+        "alert8": "Whatsapp enviado a:",
+        "alert9": "Visita registrada"
+
+    },
+
+    "profile":{
+        "welcome": "¡Bienvenido!",
+        "description": "Aquí puedes ver tu perfil en la aplicación EdiPANEL, así como tus datos iniciales.",
+        "logout": "Cerrar sesión",
+        "nameright": "Conserje - Admin",
+        "account": "Mi cuenta",
+        "userinfo": "Información del usuario",
+        "username": "Nombre de usuario",
+        "email": "Correo electrónico",
+        "firstname": "Nombre",
+        "lastname": "Apellido",
+        "accountinfo": "Información de la cuenta",
+        "building": "Edificio",
+        "apartment": "Apartamento",
+        "role": "Rol"
     }
+    
+
 }

@@ -2,12 +2,12 @@ const connection = require('../models/db');
 
 
 module.exports.addVisitor = (req, res) => {
-    const { name, guests, building, time } = req.body;
+    const { name, rut, building, apartment, time } = req.body;
 
-    const consult = 'INSERT INTO visitors (name, guests, building, time) VALUES (?, ?, ?, ?)';
+    const consult = 'INSERT INTO visitors (name, rut, building, apartment, time) VALUES (?, ?, ?, ?, ?)';
 
     try {
-        connection.query(consult, [name, guests, building, time], (err, result) => {
+        connection.query(consult, [name, rut, building, apartment, time], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).json({ error: 'An error occurred' });

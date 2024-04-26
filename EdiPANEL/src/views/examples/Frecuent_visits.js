@@ -18,7 +18,7 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-  const Form_visits = () => {
+  const Frecuent_visit = () => {
     const { t } = useTranslation("global");
     return (
         <>
@@ -109,4 +109,4 @@ import Header from "components/Headers/Header.js";
     
     
   }
-  export default Form_visits;
+  export default Frecuent_visit;

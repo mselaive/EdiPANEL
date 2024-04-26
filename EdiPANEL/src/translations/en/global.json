@@ -16,7 +16,8 @@
         "box-remember":"Remember",
         "box-login":"Start",
         "forgot-auth":"Forgot?",
-        "register-auth":"Create new account"
+        "register-auth":"Create new account",
+        "alert":"Incorrect username or password"
     },
     "navbar-auth":{
         "register":"Register",
@@ -49,16 +50,60 @@
         "message":"Welcome",
         "profile":"Profile",
         "settings":"Settings",
-        "logout":"Logout"
+        "logout":"Logout",
+        "userprofile":"User profile",
+        "home":"Home",
+        "admin":"Admin",
+        "resident":"Residents"
     },
     "form":{
-        "form-title1":"New visitor registration",
+        "form-title1":"New Visitor Registration",
         "form-title2": "Vehicle registration",
-        "apartment":"Apartment number",
+        "form-title3": "Frequent Visit Registration",
+        "form-title4": "Delivery Registration",
+        "apartment":"Apartment Number",
         "visit_type": "Frequent visit",
         "register":"Register",
-        "patent":"Patent"
+        "patent":"Patent",
+        "building":"Building (A, B, C)",
+        "delivery":"Delivery for...",
+        "mail":"Send To Email",
+        "wsp":"Send to WhatsApp",
+        "back":"Back",
+        "send":"Send",
+        "search":"Search"
+        
 
 
-    }
+    },
+    "alert":{
+        "alert1":"The RUT field is not valid",
+        "alert2":"Please complete all fields",
+        "alert3":"Notification sent",
+        "alert4":"No residents found",
+        "alert5":"Please select at least one option",
+        "alert6":"Sending email to:",
+        "alert7":" and sending WhatsApp to:",
+        "alert8":"Sending WhatsApp to:",
+        "alert9":"Registered visit"
+        
+
+    },
+
+    "profile":{
+        "welcome": "Welcome!",
+        "description": "Here you can see your profile in the EdiPANEL application, as well as your initial data.",
+        "logout": "Logout",
+        "nameright": "Janitor - Admin",
+        "account": "My Account",
+        "userinfo": "User Information",
+        "username": "Username",
+        "email": "Email",
+        "firstname": "First Name",
+        "lastname": "Last Name",
+        "accountinfo": "Account Information",
+        "building": "Building",
+        "apartment": "Apartment",
+        "role": "Role"
+      }
 }
