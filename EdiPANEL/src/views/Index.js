@@ -31,8 +31,6 @@ import {
 import { useTranslation } from "react-i18next";
 import Header from "components/Headers/Header.js";
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Asegúrate de instalar axios con npm install axios
-
 
 const Index = (props) => {
   const { t, i18n } = useTranslation("global");

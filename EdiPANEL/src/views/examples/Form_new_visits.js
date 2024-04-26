@@ -102,7 +102,7 @@ const Form_new_visits = () => {
         <>
         <Header />
         {/* Page content */}
-        <Row className="pt-3  d-flex justify-content-center align-items-center ">
+        <Row className="mt--6 d-flex justify-content-center align-items-center ">
         <Col lg="6" md="10"> 
             <Card className="bg-secondary shadow border-0">
                 <CardBody className="px-lg-5 py-lg-5">

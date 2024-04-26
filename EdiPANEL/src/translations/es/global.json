@@ -80,6 +80,23 @@
         "alert1": "El campo RUT no es válido",
         "alert2": "Por favor completa todos los campos",
         "alert3": "Notificación enviada"
+    },
+
+    "profile":{
+        "welcome": "¡Bienvenido!",
+        "description": "Aquí usuario puedes ver tu perfil en la aplicación EdiPANEL, así como ver tus datos iniciales",
+        "logout":"Desconectarse",
+        "nameright":"Conserje - Admin",
+        "account":"Mi Cuenta",
+        "userinfo":"Información de Usuario",
+        "username":"Usuario",
+        "email":"Correo Electrónico",
+        "firstname":"Nombre",
+        "lastname":"Apellido",
+        "accountinfo":"Información de la Cuenta",
+        "building":"Edificio",
+        "apartment":"Departamento",
+        "role":"Rol"
     }
 
 }
