@@ -31,7 +31,7 @@ import Header from "components/Headers/Header.js";
                 <CardBody className="px-lg-5 py-lg-5">
                     <div className="text-center text-muted mb-4">
                         <div className="text-center text-muted mb-4">
-                            <big>{t('form.form-title2')}</big>
+                            <big>{t('form.form-title3')}</big>
                         </div>
                         <Form role="form">
                             <FormGroup className="mb-3">
@@ -70,7 +70,7 @@ import Header from "components/Headers/Header.js";
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder={t('form.apartment')}
+                                        placeholder={t('form.building')}
                                         type="number"
                                         
                                     />
@@ -85,7 +85,7 @@ import Header from "components/Headers/Header.js";
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder={t('form.patent')}
+                                        placeholder={t('form.apartment')}
                                         type="text"
                                         
                                     />

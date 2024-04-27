@@ -44,9 +44,9 @@ const AdminNavbar = (props) => {
         <Container fluid>
           <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-            to="/"
+            to="/panel/index"
           >
-            {props.brandText}
+            {t("navbar.dashboard")}
           </Link>
 
           <NavItem className="h4 mb-0 text-white text-uppercase d-none navbar-dark d-lg-inline-block " expand='md' onClick={() => {
@@ -84,10 +84,6 @@ const AdminNavbar = (props) => {
                 <DropdownItem to="/panel/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>{t("navbar.profile")}</span>
-                </DropdownItem>
-                <DropdownItem to="/panel/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
-                  <span>{t("navbar.settings")}</span>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={handleLogout}>

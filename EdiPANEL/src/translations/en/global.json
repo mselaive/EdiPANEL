@@ -4,7 +4,8 @@
         "message":"Welcome!",
         "profile":"Profile",
         "settings":"Settings",
-        "logout":"Log out"
+        "logout":"Log out",
+        "dashboard":"Home"
     },
 
     "auth":{
@@ -26,8 +27,8 @@
     "index":{
         "visits":"Latest visits",
         "visits-title1":"Name",
-        "visits-title2":"Guests",
-        "visits-title3":"Building",
+        "visits-title2":"Building",
+        "visits-title3":"Apartment",
         "visits-title4":"Time",
 
         "commun":"Most common visits",
