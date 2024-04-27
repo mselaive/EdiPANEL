@@ -12,7 +12,8 @@ use project_jwt;
 INSERT INTO login (username, password) VALUES 
 ('user1', 'password1'),
 ('user2', 'password2'),
-('user3', 'password3');
+('user3', 'password3'),
+('admin@edipanel.cl', 'admin');
 
 -- Visitors
 
