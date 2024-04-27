@@ -5,7 +5,8 @@
         "message":"¡Bienvenido!",
         "profile":"Perfil",
         "settings":"Ajustes",
-        "logout":"Desconectarse"
+        "logout":"Desconectarse",
+        "dashboard":"Inicio"
     },
     "auth":{
         "title-auth":"¡Bienvenido!",
@@ -27,8 +28,8 @@
     "index":{
         "visits":"Ultimas visitas",
         "visits-title1":"Nombre",
-        "visits-title2":"Invitados",
-        "visits-title3":"Edificio",
+        "visits-title2":"Edificio",
+        "visits-title3":"Apartamento",
         "visits-title4":"Hora",
 
         "commun":"Visitas más comunes",

@@ -165,7 +165,6 @@ const Sidebar = (props) => {
                     }
                 }}>{t("navbar.lenguage")}</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>Something else here</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav>
@@ -186,10 +185,6 @@ const Sidebar = (props) => {
               <DropdownItem to="/panel/user-profile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>{t("sidebar.profile")}</span>
-              </DropdownItem>
-              <DropdownItem to="/panel/user-profile" tag={Link}>
-                <i className="ni ni-settings-gear-65" />
-                <span>{t("sidebar.settings")}</span>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem href="#pablo" onClick={handleLogout}>
