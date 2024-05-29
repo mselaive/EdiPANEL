@@ -77,7 +77,9 @@
         "wsp":"Enviar por Whatsapp",
         "back":"Volver",
         "send":"Enviar",
-        "search":"Buscar"
+        "search":"Buscar",
+        "vehicle":"Estacionamientos"
+        
 
 
     },
@@ -110,7 +112,17 @@
         "building": "Edificio",
         "apartment": "Apartamento",
         "role": "Rol"
-    }
+    },
+
+    "vehicles":{
+        "form-title1":"Estacionamiento",
+        "form-title2":"Llegada",
+        "form-title3":"Salida",
+        "form-title4":"Edificio",
+        "form-title5":"Apartamento",
+        "form-title6":"Tiempo a estar",
+        "form-title7":"Disponibilidad"
+      }
     
 
 }
