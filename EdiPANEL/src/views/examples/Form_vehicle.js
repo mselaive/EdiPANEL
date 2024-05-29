@@ -19,14 +19,31 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     Badge,
-
-
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
+import React, { useEffect, useState } from 'react';
 
   const Form_visits = () => {
     const { t } = useTranslation("global");
+
+      const [parking, setParking] = useState([]);
+    
+      useEffect(() => {
+        fetch('http://localhost:3001/parking')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            setParking(data);
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+      }, []);
     return (
         <>
         <Header />
@@ -137,6 +154,7 @@ import Header from "components/Headers/Header.js";
                             <thead className="thead-light">
                                 <tr>
                                     <th scope="col">{t("vehicles.form-title1")}</th>
+                                    <th scope="col">Nombre</th>
                                     <th scope="col">{t("vehicles.form-title2")}</th>
                                     <th scope="col">{t("vehicles.form-title3")}</th>
                                     <th scope="col">{t("vehicles.form-title6")}</th>
@@ -147,13 +165,15 @@ import Header from "components/Headers/Header.js";
                                 </tr>
                             </thead>
                                 <tbody>
+                                    {parking.map((parking, index) => (
                                         <tr>
-                                            <th scope="row">s</th>
-                                            <td>T</td>
-                                            <td>d</td>
-                                            <td>s</td>
-                                            <td>s</td>
-                                            <td>s</td>
+                                            <th scope="row">{parking.parking_id}</th>
+                                            <td>{parking.parking_name}</td>
+                                            <td>{parking.check_in_time}</td>
+                                            <td>{parking.check_out_time}</td>
+                                            <td>{parking.vehicle_number}</td>
+                                            <td>{parking.parking_building}</td>
+                                            <td>{parking.parking_apartment}</td>
                                             <td>
                                                 <Badge color="" className="badge-dot">
                                                 <i className="bg-success" />
@@ -195,6 +215,7 @@ import Header from "components/Headers/Header.js";
                                                 </UncontrolledDropdown>
                                              </td>
                                         </tr>
+                                    ))}
                             </tbody>
                         </Table>
                     </div>

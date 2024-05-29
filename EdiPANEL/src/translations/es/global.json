@@ -78,7 +78,7 @@
         "back":"Volver",
         "send":"Enviar",
         "search":"Buscar",
-        "vehicle":"Estacionamientos"
+        "vehicle":"Estacionamiento de Visitas"
         
 
 
@@ -115,12 +115,12 @@
     },
 
     "vehicles":{
-        "form-title1":"Estacionamiento",
+        "form-title1":"ID",
         "form-title2":"Llegada",
         "form-title3":"Salida",
         "form-title4":"Edificio",
         "form-title5":"Apartamento",
-        "form-title6":"Tiempo a estar",
+        "form-title6":"Patente",
         "form-title7":"Disponibilidad"
       }
     
