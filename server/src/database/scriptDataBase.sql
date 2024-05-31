@@ -33,6 +33,21 @@ INSERT INTO login (username, password) VALUES
 		email VARCHAR(50) ,
 		whatsapp VARCHAR(50)
 		) ;
+	
+		create table parking(
+		parking_id int primary key auto_increment,
+		parking_rut varchar(10) not null,
+		vehicle_number varchar(20) not null,
+		parking_name varchar(50) not null,
+		check_in_time varchar(10) not null,
+		check_out_time varchar(10) not null,
+		time_to_stay varchar(10) not null,
+		parking_building varchar(1) not null,
+		parking_apartment varchar(10) not null,
+		parking_available varchar(1) not null
+		);
+
+
 -- Sample data
 -- insertar datos de residentes
 INSERT INTO residents (resident_name, apartment_number, building, email, whatsapp) VALUES 
@@ -62,3 +77,13 @@ INSERT INTO visitors (name, rut, building, apartment, time) VALUES
 ('Robert Martinez', '21098765-3', 'B', 304, '2:20 PM'),
 ('Jennifer Wilson', '54321098-4', 'C', 103, '3:30 PM'),
 ('Christopher Lee', '67890123-5', 'A', 202, '5:00 PM');
+
+
+INSERT INTO parking (parking_rut, vehicle_number, parking_name, check_in_time, check_out_time, time_to_stay, parking_building, parking_apartment, parking_available) VALUES 
+('12345678-9', 'AB1234', 'John Smith', '2:30 PM', '3:30 PM', '1:00', 'A', '303', '0'),
+('87654321-0', 'CD5678', 'Emily Johnson', '3:15 PM', '4:15 PM', '1:00', 'B', '201', '1'),
+('45678901-2', 'EF9012', 'Michael Brown', '1:45 PM', '2:45 PM', '1:00', 'C', '405', '0'),
+('98765432-1', 'GH3456', 'Sarah Davis', '4:00 PM', '5:00 PM', '1:00', 'A', '102', '1'),
+('21098765-3', 'IJ7890', 'Robert Martinez', '2:20 PM', '3:20 PM', '1:00', 'B', '304', '0'),
+('54321098-4', 'KL1234', '', '3:30 PM', '4:30 PM', '1:00', 'C', '103', '0'),
+('67890123-5', 'MN5678', 'Christopher Lee', '5:00 PM', '6:00 PM', '1:00', 'A', '202', '1');

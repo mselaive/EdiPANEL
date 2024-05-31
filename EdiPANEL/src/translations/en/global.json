@@ -72,7 +72,8 @@
         "wsp":"Send to WhatsApp",
         "back":"Back",
         "send":"Send",
-        "search":"Search"
+        "search":"Search",
+        "vehicle":"Parking Lots"
         
 
 
@@ -106,5 +107,15 @@
         "building": "Building",
         "apartment": "Apartment",
         "role": "Role"
+      },
+
+      "vehicles":{
+        "form-title1":"Parking Lot",
+        "form-title2":"Check in",
+        "form-title3":"Check out",
+        "form-title4":"Building",
+        "form-title5":"Apartment",
+        "form-title6":"Number",
+        "form-title7":"Availability"
       }
 }
