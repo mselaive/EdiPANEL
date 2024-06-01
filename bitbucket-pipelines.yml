@@ -16,5 +16,5 @@ pipelines:
           - pipe: microsoft/azure-static-web-apps-deploy:main
             variables:
                 APP_LOCATION: 'BITBUCKET_CLONE_DIR/EdiPANEL
-                OUTPUT_LOCATION: '$BITBUCKET_CLONE_DIR/build'
+                OUTPUT_LOCATION: '$BITBUCKET_CLONE_DIR/EdiPANEL'
                 API_TOKEN: $deployment_token
