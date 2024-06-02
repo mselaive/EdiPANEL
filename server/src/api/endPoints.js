@@ -7,6 +7,11 @@ const {addVisitor} = require('../controllers/newvisitorsController')
 const {getResident} = require('../controllers/getresidentController')
 const {getParking} = require('../controllers/getparkingController')
 
+
+const app = express()
+app.set('port', process.env.PORT || 3001)
+
+
 router.get('/ping', ping);
 
 router.get('/visitors', getvisitors);
