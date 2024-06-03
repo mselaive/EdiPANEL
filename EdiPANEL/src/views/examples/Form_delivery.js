@@ -1,10 +1,9 @@
 import { useTranslation } from "react-i18next";
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import {  
     Button,
     Card,
-    CardHeader,
     CardBody,
     FormGroup,
     Form,
@@ -14,10 +13,7 @@ import {
     InputGroup,
     Row,
     Col,
-    Container,
     Alert,
-    UncontrolledAlert
-
 } from "reactstrap";
 
 // core components

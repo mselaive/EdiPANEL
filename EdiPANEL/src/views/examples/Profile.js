@@ -15,7 +15,7 @@ import UserHeader from "components/Headers/UserHeader.js";
 import { useTranslation } from "react-i18next";
 
 const Profile = () => {
-  const { t, i18n } = useTranslation("global");
+  const { t} = useTranslation("global");
   return (
     <>
       <UserHeader />
