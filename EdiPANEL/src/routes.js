@@ -1,16 +1,10 @@
-import { Navigate } from 'react-router-dom';
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
 import Forms_visits from "views/examples/Form_new_visits.js";
 import Form_vehicle from "views/examples/Form_vehicle.js";
 import Frecuent_visit from 'views/examples/Frecuent_visits';
 import Form_delivery from 'views/examples/Form_delivery';
-import i18next from 'i18next';
 
 
 var routes = [

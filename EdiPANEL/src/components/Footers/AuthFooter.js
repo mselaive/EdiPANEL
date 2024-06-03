@@ -1,4 +1,4 @@
-import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
+import {Container, Row, Col } from "reactstrap";
 
 const Login = () => {
   return (
@@ -12,6 +12,8 @@ const Login = () => {
                 <a
                   className="font-weight-bold ml-1"
                   target="_blank"
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
                 >
                   EdiPANEL
                 </a>

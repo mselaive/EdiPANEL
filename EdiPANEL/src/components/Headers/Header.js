@@ -3,7 +3,7 @@ import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import { useTranslation } from "react-i18next";
 
 const Header = () => {
-  const { t, i18n } = useTranslation("global");
+  const { t } = useTranslation("global");
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">

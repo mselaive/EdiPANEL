@@ -13,7 +13,7 @@ import routes from "routes.js";
 import { useTranslation } from "react-i18next";
 
 const Auth = (props) => {
-  const { t,i18n } = useTranslation("global");
+  const { t} = useTranslation("global");
 
 
   const mainContent = React.useRef(null);

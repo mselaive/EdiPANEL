@@ -1,7 +1,7 @@
 /* Barra cuando se usa en modo tablet o celular */
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-import  routes, {routes2, routes_admin} from '../../routes.js';
+import {routes2, routes_admin} from '../../routes.js';
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -9,45 +9,27 @@ import { useNavigate } from 'react-router-dom';
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Media,
   NavbarBrand,
   Navbar,
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col,
 } from "reactstrap";
 
-var ps;
-
-
 const Sidebar = (props) => {
   const { t, i18n } = useTranslation("global");
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  };
+
 
   const navigate = useNavigate();
 
@@ -106,7 +88,7 @@ const Sidebar = (props) => {
     });
   };
 
-  const { bgColor, routes, logo } = props;
+  const { logo } = props;
   let navbarBrandProps;
   if (logo && logo.innerLink) {
     navbarBrandProps = {

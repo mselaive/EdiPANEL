@@ -3,7 +3,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 import { useTranslation } from "react-i18next";
 
 const UserHeader = () => {
-  const { t, i18n } = useTranslation("global"); 
+  const { t } = useTranslation("global"); 
   return (
     <>
       <div
