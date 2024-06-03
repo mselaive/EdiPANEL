@@ -58,8 +58,8 @@ const Form_new_visits = () => {
             var tmp = rutCompleto.split('-');
             var digv = tmp[1];
             var rut = tmp[0];
-            if (digv == 'K') digv = 'k';
-            return (Fn.dv(rut) == digv);
+            if (digv === 'K') digv = 'k';
+            return (Fn.dv(rut) === digv);
         },
         dv: function(T) {
             var M = 0,
