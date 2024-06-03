@@ -12,8 +12,8 @@ const Login = () => {
                 <a
                   className="font-weight-bold ml-1"
                   target="_blank"
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                  href="https://youtube.com" // Proporciona una URL válida aquí
+                  rel="noopener noreferrer"
                 >
                   EdiPANEL
                 </a>

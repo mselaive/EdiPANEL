@@ -10,13 +10,14 @@ const Footer = () => {
             © {new Date().getFullYear()}{" "}
             <a
               className="font-weight-bold ml-1"
+              href="https://youtube.com" // Proporciona una URL válida aquí
               target="_blank"
+              rel="noopener noreferrer"
             >
               EdiPanel
             </a>
           </div>
         </Col>
-
       </Row>
     </footer>
   );
