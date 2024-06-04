@@ -57,7 +57,7 @@ const Login = () => {
       password: password
     };
 
-    fetch('http://localhost:3001/login',{
+    fetch('https://edipanelvercel.vercel.app/api/login',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

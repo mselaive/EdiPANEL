@@ -29,7 +29,7 @@ const Index = (props) => {
   const [visitors, setVisitors] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/visitors')
+    fetch('https://edipanelvercel.vercel.app/api/getvisitors')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

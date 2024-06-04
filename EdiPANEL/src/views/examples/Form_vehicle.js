@@ -28,7 +28,7 @@ import React, { useEffect, useState } from 'react';
       const [parking, setParking] = useState([]);
     
       useEffect(() => {
-        fetch('http://localhost:3001/parking')
+        fetch('https://edipanelvercel.vercel.app/api/getparking')
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
