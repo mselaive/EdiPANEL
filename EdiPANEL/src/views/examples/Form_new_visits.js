@@ -53,12 +53,15 @@ const Form_new_visits = () => {
     // Función para validar el rut
     const Fn = {
         validaRut: function(rutCompleto) {
+            // Verifica que el RUT tenga el formato correcto
             if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
                 return false;
+            // Divide el RUT en la parte numérica y el dígito verificador
             var tmp = rutCompleto.split('-');
             var digv = tmp[1];
             var rut = tmp[0];
-            if (digv === 'K') digv = 'k';
+            // Normaliza el dígito verificador a minúscula
+            if (digv.toLowerCase() === 'k') digv = 'k';
             return (Fn.dv(rut) === digv);
         },
         dv: function(T) {

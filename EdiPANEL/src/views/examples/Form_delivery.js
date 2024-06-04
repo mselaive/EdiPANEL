@@ -72,7 +72,7 @@ import Header from "components/Headers/Header.js";
         }
         
         try {
-            const response = await fetch(`http://localhost:3001/residents/${apartment.building}/${apartment.apa}`, {
+            const response = await fetch(`https://edipanelvercel.vercel.app/api/residents/${apartment.building}/${apartment.apa}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
