@@ -101,7 +101,7 @@ const Form_new_visits = () => {
             time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
         };
         try {
-            const response = await fetch('http://localhost:3001/addVisitor', {
+            const response = await fetch('https://edipanelvercel.vercel.app/api/addVisitor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
