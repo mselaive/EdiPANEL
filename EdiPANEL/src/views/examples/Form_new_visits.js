@@ -93,10 +93,10 @@ const Form_new_visits = () => {
             return;
         }
         
-        if (!Fn.validaRut(visitor.rut)) {
+        /*if (!Fn.validaRut(visitor.rut)) {
             showAlertWithTimeout(t('alert.alert1') , 'warning');
             return;
-        }
+        }*/
     
         const visitorWithTime = {
             ...visitor,
