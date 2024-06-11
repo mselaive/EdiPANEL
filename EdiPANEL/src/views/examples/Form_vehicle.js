@@ -164,7 +164,7 @@ import React, { useEffect, useState } from 'react';
                             </thead>
                                 <tbody>
                                     {parking.map((parking, index) => (
-                                        <tr>
+                                        <tr key={index}>
                                             <th scope="row">{parking.parking_id}</th>
                                             <td>{parking.parking_name}</td>
                                             <td>{parking.check_in_time}</td>

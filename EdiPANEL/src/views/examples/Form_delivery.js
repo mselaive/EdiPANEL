@@ -107,12 +107,37 @@ import Header from "components/Headers/Header.js";
         setShowSecondForm(true);
     };
 
+    const handleSendEmail = async () => {
+        try {
+            const emailData = {
+                selectedEmail: selectedEmail // Aquí se incluye el correo seleccionado
+            };
+    
+            const response = await fetch('http://edipanelvercel.vercel.app/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(emailData),
+            });
+    
+            if (response.ok) {
+                console.log('Correo enviado con éxito a la API.');
+            } else {
+                console.error('Error al enviar el correo a la API.');
+            }
+        } catch (error) {
+            console.error('Error al enviar el correo a la API:', error);
+        }
+    };
+    
+
     const handleSubmit2 = async (e) => {
         e.preventDefault();
     
         const url = 'https://graph.facebook.com/v19.0/296891826840399/messages';
         const headers = {
-            'Authorization': 'Bearer EAAZAKFcyZCYIkBO6flzsQB2QcxIW2skHy9ZAZAIcZBJk9BkZC8FYnZCTco3HL8qrD9WxayZAvHETVe4UkLQM8XcGFT26VK8NoOZBCwEBzb9z16ncZAcgbUJ5UGMjIvekL4XvRiSqo4ziQYf5HFyux69i1eJhgRovdZA5aBsOuqpQpBlOofY0kmJbo2959OStcK0sl80',
+            'Authorization': 'Authorization: Bearer EAAZAKFcyZCYIkBO4cUWOw9DFGZBUVPKHZAbmNMWZAMF9LMpr6mdvECFX8M9OFszgMar51SA3kAxDxPNnZAbn0utjSOPSCytUOBRJciTX8BiImxMDTQDqEUZAqLa9rZCyguG3ygDwOb2JENKveVg72Y9NTv3meVzKxKgfQLTZBctcpaASneg1hKW3Ly3NUZCtcB7Qng18O0ildN3zQbXpnaxhfP',
             'Content-Type': 'application/json'
         };
         const data = {
@@ -129,6 +154,7 @@ import Header from "components/Headers/Header.js";
             showAlertWithTimeout(t('alert.alert5'), 'warning');
             return;
         } else if (checkbox1 && !checkbox2) {
+            handleSendEmail();
             showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail}`, 'success');
         } else if (checkbox2 && !checkbox1) {
             showAlertWithTimeout(`${t('alert.alert8')} ${selectedWhatsApp}`, 'success');
