@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
+
 import {  
     Button,
     Card,
@@ -12,10 +14,11 @@ import {
     InputGroup,
     Row,
     Col,
-    Alert
+    Alert,
+    Label
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
-
+import React, {useEffect, useState } from 'react';
 // Componente Formulario para agregar visitas
 const Form_new_visits = () => {
     const { t } = useTranslation("global");
@@ -30,7 +33,32 @@ const Form_new_visits = () => {
     const [alertMessage, setAlertMessage] = useState('');
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
+    const [FrequentVisits, setFrequentVisits] = useState([]);
+    // Estado para controlar la visibilidad del segundo formulario
+    const [showSecondForm, setShowSecondForm] = useState(false);
 
+    // Cargar las visitas frecuentes al cargar la página
+    useEffect(() => {
+        fetch('http://localhost:3306/api/getfrequentvisits')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            
+            setFrequentVisits(data);
+            data.map((visit, index) => (
+                console.log(visit.rut)
+              ));
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+      }, []);
+    
+    // Función para mostrar una alerta con un mensaje y un color específico
     const showAlertWithTimeout = (message, color) => {
         setAlertMessage(message);
         setAlertColor(color);
@@ -72,6 +100,86 @@ const Form_new_visits = () => {
             return S ? S - 1 : 'k';
         }
     }
+
+    async function sendVisitorData(visitor) {
+        const url = 'https://edipanelvercel.vercel.app/api/addVisitor';
+        try {
+            const response = await fetch(url, {
+                method: 'POST', // Method itself
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...visitor,
+                    name: visitor.name,
+                    rut: visitor.rut,
+                    building: visitor.building,
+                    apartment: visitor.apartment,
+                    time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+                }), // body data type must match "Content-Type" header
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json(); // Parse JSON response
+            console.log(data); // Handle success
+        } catch (error) {
+            console.error("Error sending visitor data:", error); // Handle errors
+        }
+    }
+
+    const handleImageChange = (e) => {
+        e.preventDefault();
+        if (!e.target.files[0]) {
+            console.log('No file selected');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image',  e.target.files[0]);
+
+        
+        axios.post('http://localhost:3306/api/getID', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            
+        }).then(response => {
+            
+            const visitFound = FrequentVisits.find(visit => visit.rut === response.data.rut);
+            if (visitFound) {
+                // Si se encuentra el rut, puedes acceder a su id
+                const { id, name, rut, building, apartment } = visitFound;
+                // Mostrar una alerta o realizar alguna acción específica con los detalles encontrados
+                showAlertWithTimeout(`${t('alert.alert10')}${name}. ${t('alert.alert9')}`, "success");
+                
+                setVisitor({
+                    ...visitor,
+                    name: name,
+                    rut: rut,
+                    building: building,
+                    apartment: apartment,
+                    time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+                
+                });
+                setShouldSendData(true);
+                
+                return; // Detener la ejecución si se encuentra el rut
+            }else{
+                setVisitor({
+                    name: response.data.name,
+                    rut: response.data.rut,
+                    
+                    
+                });
+                setShowSecondForm(true);
+             }
+        }).catch(error => {
+            console.log(error);
+        });
+
+        
+    };
     
     const handleChange = (e) => {
         // Obtenemos el name y value del input
@@ -83,6 +191,60 @@ const Form_new_visits = () => {
             ...visitor,
             [e.target.name]: e.target.value,
         });
+    };
+
+    // Función para manejar el envío del primer formulario
+    useEffect(() => {
+                console.log(visitor);
+              }, [visitor]);
+
+    const [shouldSendData, setShouldSendData] = useState(false);
+
+    useEffect(() => {
+        if (shouldSendData) {
+            sendVisitorData(visitor);
+            setVisitor({
+                name: '',
+                rut: '',
+                building: '',
+                apartment: '',
+                time: '',
+            });
+            setShouldSendData(false);
+             // Restablecer el interruptor
+        }
+        }, [visitor, shouldSendData]);
+    const handleFirstFormSubmit = (e) => {
+        e.preventDefault();
+        // Verificar que el campo rut no esté vacío
+        if (!visitor.rut) {
+            showAlertWithTimeout(t('alert.alert2'), 'warning');
+            return;
+        }
+        // Verificar si el rut ingresado está en FrequentVisits
+        const visitFound = FrequentVisits.find(visit => visit.rut === visitor.rut);
+        if (visitFound) {
+            // Si se encuentra el rut, puedes acceder a su id
+            const { id, name, rut, building, apartment } = visitFound;
+            // Mostrar una alerta o realizar alguna acción específica con los detalles encontrados
+            showAlertWithTimeout(`${t('alert.alert10')}${name}. ${t('alert.alert9')}`, "success");
+            
+            setVisitor({
+                ...visitor,
+                name: name,
+                rut: rut,
+                building: building,
+                apartment: apartment,
+                time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+            
+            });
+            setShouldSendData(true);
+            
+            return; // Detener la ejecución si se encuentra el rut
+        }
+
+        // Mostrar el segundo formulario
+        setShowSecondForm(true);
     };
 
     const handleSubmit = async (e) => {
@@ -98,32 +260,13 @@ const Form_new_visits = () => {
             return;
         }*/
     
-        const visitorWithTime = {
+        setVisitor({       
             ...visitor,
-            building: visitor.building.toUpperCase(),
             time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
-        };
-        try {
-            const response = await fetch('https://edipanelvercel.vercel.app/api/addVisitor', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(visitorWithTime),
-            });
-            const data = await response.json();
-            console.log(data);
-            setVisitor({
-                name: '',
-                rut: '',
-                building: '',
-                apartment: '',
-                
-            });
-            showAlertWithTimeout(t('alert.alert9'), 'success');
-        } catch (error) {
-            console.error(error);
-        }
+        });
+        setShouldSendData(true);
+        setShowSecondForm(false);
+        showAlertWithTimeout(t('alert.alert9'), 'success');
     };
 
     return (
@@ -138,82 +281,119 @@ const Form_new_visits = () => {
                         <div className="text-center text-muted mb-4">
                             <big>{t('form.form-title1')}</big>
                         </div>
-                        <Form role="form" onSubmit={handleSubmit}>
-                            <FormGroup className="mb-3">
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-satisfied text-primary" />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        placeholder={t('index.commun-title')}
-                                        type="text"
-                                        name="name"
-                                        value={visitor.name}
-                                        onChange={handleChange}
-                                    />
-                                </InputGroup>
-                            </FormGroup>
+                        {!showSecondForm && (
+                            <Form role="form" onSubmit={handleFirstFormSubmit}>
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-credit-card text-primary" />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        placeholder="Rut (20204164-6)"
-                                        type="text"
-                                        name="rut"
-                                        value={visitor.rut}
-                                        onChange={handleChange}
-                                    />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-building text-primary" />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        placeholder={t('form.building')}
-                                        type="text"
-                                        name="building"
-                                        value={visitor.building}
-                                        onChange={handleChange}
-                                    />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-building text-primary" />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        placeholder={t('form.apartment')}
-                                        type="number"
-                                        name="apartment"
-                                        value={visitor.apartment}
-                                        onChange={handleChange}
-                                    />
-                                </InputGroup>
-                            </FormGroup>
-                            <div className="text-center">
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-credit-card text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder="Rut (20204164-6)"
+                                            type="text"
+                                            name="rut"
+                                            value={visitor.rut}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup>
                                 <Button className="my-4" color="primary" type="submit">
-                                {t("form.register")}
+                                    {t("form.register")}
                                 </Button>
-                            </div>
-                            {showAlert && (
-                                    <Alert color={alertColor}>
-                                    {alertMessage}
-                                    </Alert>
-                                )}
-                        </Form>
+                                
+                                <Label for="image" color="primary" style={{ visibility: 'hidden' }}>Image</Label>
+                                <Input type="file" name="image" id="image" onChange={handleImageChange} style={{ visibility: 'hidden', position: 'absolute', width: '1px', height: '1px' }}/>
+                                <Button type="button" color="primary" onClick={() => document.getElementById('image').click()}>{t('form.image')}</Button>
+                                </FormGroup>    
+                                {showAlert && (
+                                        <Alert color={alertColor}>
+                                        {alertMessage}
+                                        </Alert>
+                                    )}
+                            </Form>
+                        )}
+
+                        {showSecondForm && (
+                            <Form role="form" onSubmit={handleSubmit}>
+                                <FormGroup className="mb-3">
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-satisfied text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder={t('index.commun-title')}
+                                            type="text"
+                                            name="name"
+                                            value={visitor.name}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup>
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-credit-card text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder="Rut (20204164-6)"
+                                            type="text"
+                                            name="rut"
+                                            value={visitor.rut}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup>
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-building text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder={t('form.building')}
+                                            type="text"
+                                            name="building"
+                                            value={visitor.building}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup>
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-building text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder={t('form.apartment')}
+                                            type="number"
+                                            name="apartment"
+                                            value={visitor.apartment}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <div className="text-center">
+                                    <Button className="my-4" color="primary" type="submit">
+                                    {t("form.register")}
+                                    </Button>
+                                </div>
+                                {showAlert && (
+                                        <Alert color={alertColor}>
+                                        {alertMessage}
+                                        </Alert>
+                                    )}
+                            </Form>
+                        )}
                     </div>
                 </CardBody>
             </Card>

@@ -73,7 +73,8 @@
         "back":"Back",
         "send":"Send",
         "search":"Search",
-        "vehicle":"Parking Lots"
+        "vehicle":"Parking Lots",
+        "image": "Upload Image"
         
 
 
@@ -87,7 +88,8 @@
         "alert6":"Sending email to:",
         "alert7":" and sending WhatsApp to:",
         "alert8":"Sending WhatsApp to:",
-        "alert9":"Registered visit"
+        "alert9":"Registered visit",
+        "alert10":"Frequent visitor has been found: "
         
 
     },

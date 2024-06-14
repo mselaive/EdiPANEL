@@ -36,7 +36,9 @@ import React, { useEffect, useState } from 'react';
             return response.json();
           })
           .then(data => {
+            
             setParking(data);
+            
           })
           .catch(error => {
             console.error('There was an error!', error);

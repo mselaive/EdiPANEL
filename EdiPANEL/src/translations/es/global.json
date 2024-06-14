@@ -78,7 +78,8 @@
         "back":"Volver",
         "send":"Enviar",
         "search":"Buscar",
-        "vehicle":"Estacionamiento de Visitas"
+        "vehicle":"Estacionamiento de Visitas",
+        "image": "Subir Imagen"
         
 
 
@@ -93,7 +94,8 @@
         "alert6": "Correo enviado a:",
         "alert7": "y Whatsapp enviado a:",
         "alert8": "Whatsapp enviado a:",
-        "alert9": "Visita registrada"
+        "alert9": "Visita registrada",
+        "alert10": "Se ha encontrado a la visita frecuente: "
 
     },
 
