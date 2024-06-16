@@ -67,7 +67,7 @@ import { compileString } from "sass";
 
     // alamacenar los datos  de FrequentVisits
     useEffect(() => {
-        fetch('http://localhost:3306/api/getfrequentvisits')
+        fetch('https://edipanelvercel.vercel.app/api/getfrequentvisits')
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -111,7 +111,7 @@ import { compileString } from "sass";
     
         try {
             // Hacer la solicitud a la API
-            const response = await fetch(`http://localhost:3306/api/cleanparking/${parkingId}`, {
+            const response = await fetch(`https://edipanelvercel.vercel.app/api/cleanparking/${parkingId}`, {
                 method: 'GET', // Si tu API requiere un método diferente (como POST), cámbialo aquí
             });
             const data =  await response.json();
@@ -180,7 +180,7 @@ import { compileString } from "sass";
         
         try {
             // Hacer la solicitud a la API
-            const response =  fetch(`http://localhost:3306/api/addonehour/${hours}:${minutes.toString().padStart(2, '0')} ${modifier}/${index+1}`, {
+            const response =  fetch(`https://edipanelvercel.vercel.app/api/addonehour/${hours}:${minutes.toString().padStart(2, '0')} ${modifier}/${index+1}`, {
                 method: 'GET', // Si tu API requiere un método diferente (como POST), cámbialo aquí
             });
             
@@ -209,7 +209,7 @@ import { compileString } from "sass";
         if (shouldSubmit) {
             console.log('Submitting:', vehicle);
             const data = { ...vehicle };
-            fetch('http://localhost:3306/api/addvehicle', {
+            fetch('https://edipanelvercel.vercel.app/api/addvehicle', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

@@ -39,7 +39,7 @@ const Form_new_visits = () => {
 
     // Cargar las visitas frecuentes al cargar la página
     useEffect(() => {
-        fetch('http://localhost:3306/api/getfrequentvisits')
+        fetch('https://edipanelvercel.vercel.app/api/getfrequentvisits')
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -155,7 +155,7 @@ const Form_new_visits = () => {
         formData.append('image',  e.target.files[0]);
 
         
-        axios.post('http://localhost:3306/api/getID', formData, {
+        axios.post('https://edipanelvercel.vercel.app/api/getID', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
