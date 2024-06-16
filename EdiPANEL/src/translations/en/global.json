@@ -118,6 +118,12 @@
         "form-title4":"Building",
         "form-title5":"Apartment",
         "form-title6":"Number",
-        "form-title7":"Availability"
+        "form-title7":"Availability",
+        "form-title8":"Name",
+        "edit":"Edit",
+        "delete":"Delete",
+        "delay":"Delay",
+        "alert1": "Vehicle successfully registered in the parking lot: ",
+        "alert2": "All parking lots in use"
       }
 }

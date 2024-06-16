@@ -33,7 +33,7 @@ const Form_new_visits = () => {
     const [alertMessage, setAlertMessage] = useState('');
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
-    const [FrequentVisits, setFrequentVisits] = useState([]);
+    const [frequentVisits, setFrequentVisits] = useState([]);
     // Estado para controlar la visibilidad del segundo formulario
     const [showSecondForm, setShowSecondForm] = useState(false);
 
@@ -49,9 +49,7 @@ const Form_new_visits = () => {
           .then(data => {
             
             setFrequentVisits(data);
-            data.map((visit, index) => (
-                console.log(visit.rut)
-              ));
+            
           })
           .catch(error => {
             console.error('There was an error!', error);
@@ -127,7 +125,25 @@ const Form_new_visits = () => {
             console.error("Error sending visitor data:", error); // Handle errors
         }
     }
+    
+    const [shouldSendData, setShouldSendData] = useState(false);
 
+    useEffect(() => {
+        if (shouldSendData) {
+            sendVisitorData(visitor);
+            setVisitor({
+                name: '',
+                rut: '',
+                building: '',
+                apartment: '',
+                time: '',
+            });
+            setShouldSendData(false);
+            // Restablecer el interruptor
+        }
+        }, [visitor, shouldSendData]);
+
+    // Función para manejar imagen
     const handleImageChange = (e) => {
         e.preventDefault();
         if (!e.target.files[0]) {
@@ -145,11 +161,11 @@ const Form_new_visits = () => {
             }
             
         }).then(response => {
-            
-            const visitFound = FrequentVisits.find(visit => visit.rut === response.data.rut);
+            // Verificar si el rut ingresado está en FrequentVisits
+            const visitFound = frequentVisits.find(visit => visit.rut === response.data.rut);
             if (visitFound) {
                 // Si se encuentra el rut, puedes acceder a su id
-                const { id, name, rut, building, apartment } = visitFound;
+                const {  name, rut, building, apartment } = visitFound;
                 // Mostrar una alerta o realizar alguna acción específica con los detalles encontrados
                 showAlertWithTimeout(`${t('alert.alert10')}${name}. ${t('alert.alert9')}`, "success");
                 
@@ -180,12 +196,10 @@ const Form_new_visits = () => {
 
         
     };
-    
+    // Función para manejar los cambios en los inputs
     const handleChange = (e) => {
         // Obtenemos el name y value del input
         const { name, value } = e.target;
-
-        
         
         setVisitor({
             ...visitor,
@@ -193,27 +207,10 @@ const Form_new_visits = () => {
         });
     };
 
-    // Función para manejar el envío del primer formulario
-    useEffect(() => {
-                console.log(visitor);
-              }, [visitor]);
+   
+    
 
-    const [shouldSendData, setShouldSendData] = useState(false);
-
-    useEffect(() => {
-        if (shouldSendData) {
-            sendVisitorData(visitor);
-            setVisitor({
-                name: '',
-                rut: '',
-                building: '',
-                apartment: '',
-                time: '',
-            });
-            setShouldSendData(false);
-             // Restablecer el interruptor
-        }
-        }, [visitor, shouldSendData]);
+   // Función para manejar el envío del primer formulario
     const handleFirstFormSubmit = (e) => {
         e.preventDefault();
         // Verificar que el campo rut no esté vacío
@@ -222,10 +219,10 @@ const Form_new_visits = () => {
             return;
         }
         // Verificar si el rut ingresado está en FrequentVisits
-        const visitFound = FrequentVisits.find(visit => visit.rut === visitor.rut);
+        const visitFound = frequentVisits.find(visit => visit.rut === visitor.rut);
         if (visitFound) {
             // Si se encuentra el rut, puedes acceder a su id
-            const { id, name, rut, building, apartment } = visitFound;
+            const {  name, rut, building, apartment } = visitFound;
             // Mostrar una alerta o realizar alguna acción específica con los detalles encontrados
             showAlertWithTimeout(`${t('alert.alert10')}${name}. ${t('alert.alert9')}`, "success");
             
@@ -246,7 +243,7 @@ const Form_new_visits = () => {
         // Mostrar el segundo formulario
         setShowSecondForm(true);
     };
-
+    // Función para manejar el envío del segundo formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Verificar que los campos obligatorios no estén vacíos

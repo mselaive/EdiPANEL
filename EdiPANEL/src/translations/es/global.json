@@ -123,7 +123,15 @@
         "form-title4":"Edificio",
         "form-title5":"Apartamento",
         "form-title6":"Patente",
-        "form-title7":"Disponibilidad"
+        "form-title7":"Disponibilidad",
+        "form-title8":"Nombre",
+        "edit":"Editar",
+        "delete":"Eliminar",
+        "delay":"Aplazar",
+        "alert1": "Vehículo registrado exitosamente en el estacionamiento: ",
+        "alert2": "Todos los estacionamientos en uso"
+
+
       }
     
 
