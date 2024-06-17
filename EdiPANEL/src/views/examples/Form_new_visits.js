@@ -198,8 +198,6 @@ const Form_new_visits = () => {
     };
     // Función para manejar los cambios en los inputs
     const handleChange = (e) => {
-        // Obtenemos el name y value del input
-        const { name, value } = e.target;
         
         setVisitor({
             ...visitor,
