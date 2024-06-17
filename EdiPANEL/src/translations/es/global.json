@@ -79,7 +79,8 @@
         "back":"Volver",
         "send":"Enviar",
         "search":"Buscar",
-        "vehicle":"Estacionamiento de Visitas"
+        "vehicle":"Estacionamiento de Visitas",
+        "image": "Subir Imagen"
         
 
 
@@ -94,7 +95,8 @@
         "alert6": "Correo enviado a:",
         "alert7": "y Whatsapp enviado a:",
         "alert8": "Whatsapp enviado a:",
-        "alert9": "Visita registrada"
+        "alert9": "Visita registrada",
+        "alert10": "Se ha encontrado a la visita frecuente: "
 
     },
 
@@ -122,7 +124,15 @@
         "form-title4":"Edificio",
         "form-title5":"Apartamento",
         "form-title6":"Patente",
-        "form-title7":"Disponibilidad"
+        "form-title7":"Disponibilidad",
+        "form-title8":"Nombre",
+        "edit":"Editar",
+        "delete":"Eliminar",
+        "delay":"Aplazar",
+        "alert1": "Vehículo registrado exitosamente en el estacionamiento: ",
+        "alert2": "Todos los estacionamientos en uso"
+
+
       }
     
 
