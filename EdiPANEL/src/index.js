@@ -9,6 +9,7 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import Residentpanel from "layouts/Residentpanel";
 
 import {I18nextProvider} from "react-i18next"
 import i18next from "i18next";
@@ -57,6 +58,10 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/auth/*" element={<AuthLayout />} />
+
+        <Route path="/residentpanel/*" element={<ProtectedRoute><Residentpanel /></ProtectedRoute>} />
+
+
         <Route path="/panel/*" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
         <Route path="/" element={<Navigate to="/auth" />} />
       </Routes>
