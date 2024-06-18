@@ -32,6 +32,7 @@ const Form_visits = () => {
     //definir variables
     const [parking, setParking] = useState([]);
     const [frequentVisits, setFrequentVisits] = useState([]);
+    const [apartments, setApartments] = useState([]);
     const [vehicle, setVehicle] = useState({
         name: '',
         rut: '',
@@ -123,7 +124,9 @@ const Form_visits = () => {
                 
                 return; // Detener la ejecución si se encuentra el rut
             }else{
+                console.log(response.data);
                 setVehicle({
+                    ...vehicle,
                     name: response.data.name,
                     rut: response.data.rut,
                     
@@ -171,6 +174,24 @@ const Form_visits = () => {
             
             setFrequentVisits(data);
             
+            })
+            .catch(error => {
+            console.error('There was an error!', error);
+            });
+    }, []);
+    // alamacenar los datos  de Apartments
+    useEffect(() => {
+        fetch('https://edipanelvercel.vercel.app/api/getapartments')
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            })
+            .then(data => {
+            
+            setApartments(data);
+            console.log(data);
             })
             .catch(error => {
             console.error('There was an error!', error);
@@ -313,6 +334,7 @@ const Form_visits = () => {
             .then(data => console.log('Success:', data))
             .catch((error) => console.error('Error:', error));
             setVehicle({    
+            ...vehicle,
             name: '',
             rut: '',
             check_in_time: '',
@@ -321,6 +343,7 @@ const Form_visits = () => {
             parking_building: '',
             apartment: '',
         });
+        
         }
         
         setShouldSubmit(false);
@@ -372,7 +395,7 @@ const Form_visits = () => {
                     ...vehicle,
                     name: name,
                     rut: rut,
-                    parking_building: building,
+                    parking_building: building.toUpperCase(),
                     apartment: apartment,
                     vehicle_number: vehicle_number,
                     check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
@@ -381,8 +404,7 @@ const Form_visits = () => {
                     parking_available: '1',
                 });
                 console.log(vehicle);
-                
-                
+
                 setShouldSubmit(true);
 
 
@@ -406,10 +428,18 @@ const Form_visits = () => {
             showAlertWithTimeout(t('alert.alert2'), 'danger');
             return;
         }
-        if (vehicle.parking_building.length > 1) {
-            showAlertWithTimeout(t('hola'), 'warning');
+        //console.log(vehicle.apartment.type);
+        const exists = apartments.find(apa =>
+            
+            apa.apartment === vehicle.apartment &&
+            apa.building === vehicle.parking_building.toUpperCase()
+           
+        );
+        if (!exists) {
+            showAlertWithTimeout(t('alert.alert11'), 'warning');
             return;
         }
+    
         
         const checkInTime = new Date();
         const checkOutTime = new Date(checkInTime.getTime() + (60 * 60 * 1000));
@@ -429,12 +459,13 @@ const Form_visits = () => {
         lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.vehicle_number = vehicle.vehicle_number;
-        lugarDisponible.parking_building = vehicle.parking_building;
+        lugarDisponible.parking_building = vehicle.parking_building.toUpperCase();
         lugarDisponible.parking_apartment = vehicle.apartment;
         lugarDisponible.parking_available = '1';
         showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
         setVehicle({
             ...vehicle,
+            parking_building: vehicle.parking_building.toUpperCase(),
             check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
             check_out_time: checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
             parking_id: lugarDisponible.parking_id,
@@ -444,8 +475,18 @@ const Form_visits = () => {
         
         
         setShouldSubmit(true);
+        setVehicle({    
+            ...vehicle,
+            name: '',
+            rut: '',
+            check_in_time: '',
+            check_out_time: '',
+            vehicle_number: '',
+            parking_building: '',
+            apartment: '',
+        });
 
-
+        setShowSecondForm(false);
 
         }else{
         showAlertWithTimeout(t('vehicles.alert2'), 'warning');
@@ -547,7 +588,7 @@ const Form_visits = () => {
                                         placeholder={t('form.building')}
                                         type="text"
                                         name="parking_building"
-                                        value={vehicle.parking_building}
+                                        value={vehicle.parking_building.toUpperCase()}
                                         onChange={handleChange}
                                         
                                     />
@@ -561,14 +602,14 @@ const Form_visits = () => {
                                             <i className="ni ni-building text-primary" />
                                         </InputGroupText>
                                     </InputGroupAddon>
-                                    <Input
+                                   <Input
                                         placeholder={t('form.apartment')}
                                         type="number"
                                         name="apartment"
                                         value={vehicle.apartment}
                                         onChange={handleChange}
                                         
-                                    />
+                                    /> 
                                 </InputGroup>
                                 
                             </FormGroup>

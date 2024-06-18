@@ -34,6 +34,7 @@ const Form_new_visits = () => {
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
     const [frequentVisits, setFrequentVisits] = useState([]);
+    const [apartments, setApartments] = useState([]);
     // Estado para controlar la visibilidad del segundo formulario
     const [showSecondForm, setShowSecondForm] = useState(false);
 
@@ -55,6 +56,24 @@ const Form_new_visits = () => {
             console.error('There was an error!', error);
           });
       }, []);
+     // alamacenar los datos  de Apartments
+     useEffect(() => {
+        fetch('https://edipanelvercel.vercel.app/api/getapartments')
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            })
+            .then(data => {
+            
+            setApartments(data);
+            console.log(data);
+            })
+            .catch(error => {
+            console.error('There was an error!', error);
+            });
+    }, []);
     
     // Función para mostrar una alerta con un mensaje y un color específico
     const showAlertWithTimeout = (message, color) => {
@@ -79,16 +98,13 @@ const Form_new_visits = () => {
     // Función para validar el rut
     const Fn = {
         validaRut: function(rutCompleto) {
-            // Verifica que el RUT tenga el formato correcto
             if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
                 return false;
-            // Divide el RUT en la parte numérica y el dígito verificador
             var tmp = rutCompleto.split('-');
             var digv = tmp[1];
             var rut = tmp[0];
-            // Normaliza el dígito verificador a minúscula
-            if (digv.toLowerCase() === 'k') digv = 'k';
-            return (Fn.dv(rut) === digv);
+            if (digv == 'K') digv = 'k';
+            return (Fn.dv(rut) == digv);
         },
         dv: function(T) {
             var M = 0,
@@ -183,6 +199,7 @@ const Form_new_visits = () => {
                 return; // Detener la ejecución si se encuentra el rut
             }else{
                 setVisitor({
+                    ...visitor,
                     name: response.data.name,
                     rut: response.data.rut,
                     
@@ -249,14 +266,27 @@ const Form_new_visits = () => {
             showAlertWithTimeout(t('alert.alert2'), 'warning');
             return;
         }
+        const exists = apartments.find(apa =>
+            
+            apa.apartment === visitor.apartment &&
+            apa.building === visitor.building.toUpperCase()
+           
+        );
+        if (!exists) {
+            showAlertWithTimeout(t('alert.alert11'), 'warning');
+            return;
+        }
         
-        /*if (!Fn.validaRut(visitor.rut)) {
+        /*console.log(visitor.rut);
+        if (!Fn.validaRut(visitor.rut)) {
             showAlertWithTimeout(t('alert.alert1') , 'warning');
             return;
         }*/
+        
     
         setVisitor({       
             ...visitor,
+            building: visitor.building.toUpperCase(),
             time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
         });
         setShouldSendData(true);
@@ -356,7 +386,7 @@ const Form_new_visits = () => {
                                             placeholder={t('form.building')}
                                             type="text"
                                             name="building"
-                                            value={visitor.building}
+                                            value={visitor.building.toUpperCase()}
                                             onChange={handleChange}
                                         />
                                     </InputGroup>
