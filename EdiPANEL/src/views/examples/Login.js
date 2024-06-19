@@ -56,7 +56,17 @@ const Login = () => {
       username: username,
       password: password
     };
-
+  
+    // Verificar si el correo electrónico y la contraseña son específicos
+    if (data.username === "residente@edipanel.cl" && data.password === "pass1") {
+      // Generar un token aleatorio
+      const fakeToken = 'residente-' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('token', fakeToken);
+      // Redirigir directamente a /residentpanel sin llamar a la API
+      navigate('/residentpanel');
+      return; // Detener la ejecución de la función aquí
+    }
+  
     fetch('https://edipanelvercel.vercel.app/api/login',{
       method: 'POST',
       headers: {
@@ -67,15 +77,11 @@ const Login = () => {
     )
       .then(response => response.json())
       .then(result => {
-
         console.log(result.token)
-
+  
         if(result.token){
           localStorage.setItem('token', result.token);
-          /* Timeout para el token por definir*/
-          /*setTimeout(() => {
-            localStorage.removeItem('token');
-          }, 2 * 60 * 1000); // 2 minutos en milisegundos*/ 
+          // Redirigir a /panel para cualquier otro usuario
           navigate('/panel')
         }else{
           console.log("no hay token")
@@ -85,8 +91,6 @@ const Login = () => {
       .catch(error => {
         console.error(error);
       });
-
-
   }
   return (
     <>
