@@ -100,7 +100,15 @@ const Login = () => {
             <div className="text-center text-muted mb-4">
               <small>{t("auth.box-title")}</small>
             </div>
-            <Form role="form">
+            <Form role="form" 
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    handdleLogin(e); // Asegúrate de que el nombre de la función esté correctamente escrito
+                  }
+                }}
+              tabIndex="0"
+            >
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -182,4 +190,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 

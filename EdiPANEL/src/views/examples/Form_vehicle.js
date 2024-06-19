@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
 import {  
     Button,
     Card,
@@ -17,19 +18,21 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     Badge,
-    Alert
+    Alert,
+    Label
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
 import React, { useEffect, useState } from 'react';
 import { compileString } from "sass";
 
-  const Form_visits = () => {
+const Form_visits = () => {
     const { t } = useTranslation("global");
 
     //definir variables
     const [parking, setParking] = useState([]);
-    const [FrequentVisits, setFrequentVisits] = useState([]);
+    const [frequentVisits, setFrequentVisits] = useState([]);
+    const [apartments, setApartments] = useState([]);
     const [vehicle, setVehicle] = useState({
         name: '',
         rut: '',
@@ -44,6 +47,99 @@ import { compileString } from "sass";
     const [alertMessage, setAlertMessage] = useState('');
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
+    const [showSecondForm, setShowSecondForm] = useState(false);
+
+    // Función para manejar el envío del formulario
+    const handleImageChange = (e) => {
+        e.preventDefault();
+        if (!e.target.files[0]) {
+            console.log('No file selected');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image',  e.target.files[0]);
+
+        
+        axios.post('https://edipanelvercel.vercel.app/api/getID', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            
+        }).then(response => {
+            // Verificar si el rut ingresado está en FrequentVisits
+            const visitFound = frequentVisits.find(visit => visit.rut === response.data.rut);
+            if (visitFound) {
+                // Si se encuentra el rut, puedes acceder a su id
+                const {  name, rut, building, apartment, vehicle_number } = visitFound;
+                // Mostrar una alerta o realizar alguna acción específica con los detalles encontrados
+                showAlertWithTimeout(`${t('alert.alert10')}${name}. ${t('alert.alert9')}`, "success");
+                
+               
+                const checkInTime = new Date();
+                const checkOutTime = new Date(checkInTime.getTime() + (60 * 60 * 1000));
+
+
+                const lugarDisponible = parking.find(lugar => 
+                lugar.parking_name === null && 
+                lugar.check_in_time === null && 
+                lugar.check_out_time === null && 
+                lugar.vehicle_number === null && 
+                lugar.parking_building === null && 
+                lugar.parking_apartment === null
+                );
+                if (lugarDisponible) {
+                     // Asignar los datos de vehicle a lugarDisponible
+                    lugarDisponible.parking_name = name;
+                    lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
+                    lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
+                    lugarDisponible.vehicle_number = vehicle_number;
+                    lugarDisponible.parking_building = building;
+                    lugarDisponible.parking_apartment = apartment;
+                    lugarDisponible.parking_available = '1';
+                    showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
+                    setVehicle({
+                        ...vehicle,
+
+                        name: name,
+                        rut: rut,
+                        parking_building: building,
+                        apartment: apartment,
+                        vehicle_number: vehicle_number,
+                        check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+                        check_out_time: checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+                        parking_id: lugarDisponible.parking_id,
+                        parking_available: '1',
+                    });
+                    console.log(vehicle);
+                    
+                    
+                    setShouldSubmit(true);
+
+
+
+                }else{
+                showAlertWithTimeout(t('vehicles.alert2'), 'warning');
+                }
+                
+                return; // Detener la ejecución si se encuentra el rut
+            }else{
+                console.log(response.data);
+                setVehicle({
+                    ...vehicle,
+                    name: response.data.name,
+                    rut: response.data.rut,
+                    
+                    
+                });
+                setShowSecondForm(true);
+                }
+        }).catch(error => {
+            console.log(error);
+        });
+
+        
+    };
 
     // alamacenar los datos  de Parking
     useEffect(() => {
@@ -68,20 +164,38 @@ import { compileString } from "sass";
     // alamacenar los datos  de FrequentVisits
     useEffect(() => {
         fetch('https://edipanelvercel.vercel.app/api/getfrequentvisits')
-          .then(response => {
+            .then(response => {
             if (!response.ok) {
-              throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok');
             }
             return response.json();
-          })
-          .then(data => {
+            })
+            .then(data => {
             
             setFrequentVisits(data);
             
-          })
-          .catch(error => {
+            })
+            .catch(error => {
             console.error('There was an error!', error);
-          });
+            });
+    }, []);
+    // alamacenar los datos  de Apartments
+    useEffect(() => {
+        fetch('https://edipanelvercel.vercel.app/api/getapartments')
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            })
+            .then(data => {
+            
+            setApartments(data);
+            console.log(data);
+            })
+            .catch(error => {
+            console.error('There was an error!', error);
+            });
     }, []);
 
     // Función para mostrar una alerta con un mensaje y un color específico
@@ -108,18 +222,18 @@ import { compileString } from "sass";
         // Asumiendo que cada objeto de estacionamiento tiene un parking_id
         const parkingId = parking[index].parking_id;
         console.log('Parking ID:', parkingId);
-    
+
         try {
             // Hacer la solicitud a la API
             const response = await fetch(`https://edipanelvercel.vercel.app/api/cleanparking/${parkingId}`, {
                 method: 'GET', // Si tu API requiere un método diferente (como POST), cámbialo aquí
             });
             const data =  await response.json();
-    
+
             if (response.ok) {
                 // Hacer una copia del arreglo parking
                 const updatedParking = [...parking];
-    
+
                 // Restablecer los valores del objeto en el índice especificado
                 updatedParking[index] = {
                     ...updatedParking[index],
@@ -131,10 +245,10 @@ import { compileString } from "sass";
                     parking_apartment: null,
                     parking_available: "0" // Asumiendo que también quieres restablecer esta propiedad
                 };
-    
+
                 // Actualizar el estado de parking con el nuevo arreglo
                 setParking(updatedParking);
-    
+
                 console.log('Parking limpiado con éxito:', data);
             } else {
                 // Manejar respuestas de error de la API
@@ -152,15 +266,15 @@ import { compileString } from "sass";
         }
         let [time, modifier] = timeString.split(' ');
         let [hours, minutes] = time.split(':').map(Number);
-    
+
         if (modifier === 'PM' && hours < 12) {
             hours += 12;
         } else if (modifier === 'AM' && hours === 12) {
             hours = 0;
         }
-    
+
         hours += 1;
-    
+
         if (hours >= 24) {
             hours -= 24;
         }
@@ -175,7 +289,7 @@ import { compileString } from "sass";
             ...updatedParking[index],
             
             check_out_time: `${hours}:${minutes.toString().padStart(2, '0')} ${modifier}`,
-           
+            
         };
         
         try {
@@ -190,7 +304,7 @@ import { compileString } from "sass";
             // Catch and handle any errors that occur during the fetch operation
             console.error('Error en la solicitud a la API:', error);
         }
-    
+
         setParking(updatedParking);
 
         return `${hours}:${minutes.toString().padStart(2, '0')} ${modifier}`;
@@ -210,19 +324,101 @@ import { compileString } from "sass";
             console.log('Submitting:', vehicle);
             const data = { ...vehicle };
             fetch('https://edipanelvercel.vercel.app/api/addvehicle', {
-              method: 'POST',
-              headers: {
+                method: 'POST',
+                headers: {
                 'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
+                },
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => console.log('Success:', data))
             .catch((error) => console.error('Error:', error));
-            
+            setVehicle({    
+            ...vehicle,
+            name: '',
+            rut: '',
+            check_in_time: '',
+            check_out_time: '',
+            vehicle_number: '',
+            parking_building: '',
+            apartment: '',
+        });
+        
         }
+        
         setShouldSubmit(false);
-      }, [shouldSubmit, vehicle]);
+        }, [shouldSubmit, vehicle]);
+
+
+    const handleFirstFormSubmit = (e) => {
+        e.preventDefault();
+        // Verificar que el campo rut no esté vacío
+        if (!vehicle.rut) {
+            showAlertWithTimeout(t('alert.alert2'), 'warning');
+            return;
+        }
+        
+
+        // Verificar si el rut ingresado está en FrequentVisits
+        const visitFound = frequentVisits.find(visit => visit.rut === vehicle.rut);
+        if (visitFound) {
+            // Si se encuentra el rut, puedes acceder a su id
+            const {  name, rut, building, apartment, vehicle_number  } = visitFound;
+            console.log(vehicle_number);
+            // Mostrar una alerta o realizar alguna acción específica con los detalles encontrados
+            showAlertWithTimeout(`${t('alert.alert10')}${name}. ${t('alert.alert9')}`, "success");
+            
+           
+            const checkInTime = new Date();
+            const checkOutTime = new Date(checkInTime.getTime() + (60 * 60 * 1000));
+
+
+            const lugarDisponible = parking.find(lugar => 
+            lugar.parking_name === null && 
+            lugar.check_in_time === null && 
+            lugar.check_out_time === null && 
+            lugar.vehicle_number === null && 
+            lugar.parking_building === null && 
+            lugar.parking_apartment === null
+            );
+            if (lugarDisponible) {
+                // Asignar los datos de vehicle a lugarDisponible
+                lugarDisponible.parking_name = name;
+                lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
+                lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
+                lugarDisponible.vehicle_number = vehicle_number;
+                lugarDisponible.parking_building = building;
+                lugarDisponible.parking_apartment = apartment;
+                lugarDisponible.parking_available = '1';
+                showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
+                setVehicle({
+                    ...vehicle,
+                    name: name,
+                    rut: rut,
+                    parking_building: building.toUpperCase(),
+                    apartment: apartment,
+                    vehicle_number: vehicle_number,
+                    check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+                    check_out_time: checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
+                    parking_id: lugarDisponible.parking_id,
+                    parking_available: '1',
+                });
+                console.log(vehicle);
+
+                setShouldSubmit(true);
+
+
+
+        }else{
+        showAlertWithTimeout(t('vehicles.alert2'), 'warning');
+        }
+            
+            return; // Detener la ejecución si se encuentra el rut
+        }
+
+        // Mostrar el segundo formulario
+        setShowSecondForm(true);
+    };
 
     // Función para manejar el envío del formulario
     const handleSubmit = (e) => {
@@ -232,11 +428,22 @@ import { compileString } from "sass";
             showAlertWithTimeout(t('alert.alert2'), 'danger');
             return;
         }
+        //console.log(vehicle.apartment.type);
+        const exists = apartments.find(apa =>
+            
+            apa.apartment === vehicle.apartment &&
+            apa.building === vehicle.parking_building.toUpperCase()
+           
+        );
+        if (!exists) {
+            showAlertWithTimeout(t('alert.alert11'), 'warning');
+            return;
+        }
+    
         
         const checkInTime = new Date();
         const checkOutTime = new Date(checkInTime.getTime() + (60 * 60 * 1000));
-        
-       
+
 
         const lugarDisponible = parking.find(lugar => 
         lugar.parking_name === null && 
@@ -245,19 +452,20 @@ import { compileString } from "sass";
         lugar.vehicle_number === null && 
         lugar.parking_building === null && 
         lugar.parking_apartment === null
-      );
-      if (lugarDisponible) {
+        );
+        if (lugarDisponible) {
         // Asignar los datos de vehicle a lugarDisponible
         lugarDisponible.parking_name = vehicle.name;
         lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.vehicle_number = vehicle.vehicle_number;
-        lugarDisponible.parking_building = vehicle.parking_building;
+        lugarDisponible.parking_building = vehicle.parking_building.toUpperCase();
         lugarDisponible.parking_apartment = vehicle.apartment;
         lugarDisponible.parking_available = '1';
         showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
         setVehicle({
             ...vehicle,
+            parking_building: vehicle.parking_building.toUpperCase(),
             check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
             check_out_time: checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
             parking_id: lugarDisponible.parking_id,
@@ -265,15 +473,26 @@ import { compileString } from "sass";
         });
         console.log(vehicle);
         
+        
         setShouldSubmit(true);
+        setVehicle({    
+            ...vehicle,
+            name: '',
+            rut: '',
+            check_in_time: '',
+            check_out_time: '',
+            vehicle_number: '',
+            parking_building: '',
+            apartment: '',
+        });
 
+        setShowSecondForm(false);
 
-
-      }else{
+        }else{
         showAlertWithTimeout(t('vehicles.alert2'), 'warning');
-      }
-      //console.log(lugarDisponible);
-      };
+        }
+        //console.log(lugarDisponible);
+        };
 
     return (
         <>
@@ -288,6 +507,41 @@ import { compileString } from "sass";
                         <div className="text-center text-muted mb-4">
                             <big>{t('form.form-title2')}</big>
                         </div>
+                        {!showSecondForm && (
+                            <Form role="form" onSubmit={handleFirstFormSubmit}>
+                            <FormGroup>
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-credit-card text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder="Rut (20204164-6)"
+                                            type="text"
+                                            name="rut"
+                                            value={vehicle.rut}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup>
+                                <Button className="my-4" color="primary" type="submit">
+                                    {t("form.register")}
+                                </Button>
+                                
+                                <Label for="image" color="primary" style={{ visibility: 'hidden' }}>Image</Label>
+                                <Input type="file" name="image" id="image" onChange={handleImageChange} style={{ visibility: 'hidden', position: 'absolute', width: '1px', height: '1px' }}/>
+                                <Button type="button" color="primary" onClick={() => document.getElementById('image').click()}>{t('form.image')}</Button>
+                                </FormGroup>    
+                                {showAlert && (
+                                        <Alert color={alertColor}>
+                                        {alertMessage}
+                                        </Alert>
+                                    )}
+                            </Form>
+                        )}
+                        {showSecondForm && (
                         <Form role="form" onSubmit={handleSubmit}>
                             <FormGroup className="mb-3">
                                 <InputGroup className="input-group-alternative">
@@ -334,7 +588,7 @@ import { compileString } from "sass";
                                         placeholder={t('form.building')}
                                         type="text"
                                         name="parking_building"
-                                        value={vehicle.parking_building}
+                                        value={vehicle.parking_building.toUpperCase()}
                                         onChange={handleChange}
                                         
                                     />
@@ -348,14 +602,14 @@ import { compileString } from "sass";
                                             <i className="ni ni-building text-primary" />
                                         </InputGroupText>
                                     </InputGroupAddon>
-                                    <Input
+                                   <Input
                                         placeholder={t('form.apartment')}
                                         type="number"
                                         name="apartment"
                                         value={vehicle.apartment}
                                         onChange={handleChange}
                                         
-                                    />
+                                    /> 
                                 </InputGroup>
                                 
                             </FormGroup>
@@ -388,6 +642,7 @@ import { compileString } from "sass";
                                     )}
                             
                         </Form>
+                        )}
                     </div>
                 </CardBody>
             </Card>
@@ -457,7 +712,7 @@ import { compileString } from "sass";
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         resetParkingAtIndex(index); // Muestra el índice en consola
-                                                      }}
+                                                        }}
                                                     
                                                     >
                                                     {t("vehicles.delete")}
@@ -468,13 +723,13 @@ import { compileString } from "sass";
                                                         e.preventDefault();
                                                         console.log(addOneHour(index, parking.check_out_time));
                                                         
-                                                      }}
+                                                        }}
                                                     >
                                                     {t("vehicles.delay")}
                                                     </DropdownItem>
                                                 </DropdownMenu>
                                                 </UncontrolledDropdown>
-                                             </td>
+                                                </td>
                                         </tr>
                                     ))}
                             </tbody>
@@ -485,11 +740,11 @@ import { compileString } from "sass";
         </Col>
     </Row>
 
-    
-       
+
+        
         </>
     );
-    
-    
-  }
-  export default Form_visits;
+
+
+}
+export default Form_visits;

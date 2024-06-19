@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import {  
     Button,
@@ -15,6 +15,8 @@ import {
     Col,
     Alert,
 } from "reactstrap";
+
+import Select from 'react-select';
 
 // core components
 import Header from "components/Headers/Header.js";
@@ -33,6 +35,7 @@ import Header from "components/Headers/Header.js";
     const [selectedWhatsApp, setSelectedWhatsApp] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
     const [alertColor, setAlertColor] = useState('');
+    const [apartments, setApartments] = useState([]);
     
     const [timeoutId, setTimeoutId] = useState(null);
     const showAlertWithTimeout = (message, color) => {
@@ -54,9 +57,28 @@ import Header from "components/Headers/Header.js";
         setTimeoutId(newTimeoutId);
     };
     
+    // alamacenar los datos  de Apartments
+    useEffect(() => {
+        fetch('https://edipanelvercel.vercel.app/api/getapartments')
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            })
+            .then(data => {
+            
+            setApartments(data);
+            console.log(data);
+            })
+            .catch(error => {
+            console.error('There was an error!', error);
+            });
+    }, []);
+
     const handleChange = (e) => {
     
-        const { name, value } = e.target;
+        
         
         setApartment({
             ...apartment,
@@ -68,6 +90,16 @@ import Header from "components/Headers/Header.js";
         e.preventDefault();
         if (!apartment.building || !apartment.apa) {
             showAlertWithTimeout(t('alert.alert2'), 'warning');
+            return;
+        }
+        const exists = apartments.find(apa =>
+            
+            apa.apartment === apartment.apa &&
+            apa.building === apartment.building.toUpperCase()
+           
+        );
+        if (!exists) {
+            showAlertWithTimeout(t('alert.alert11'), 'warning');
             return;
         }
         
@@ -190,8 +222,8 @@ import Header from "components/Headers/Header.js";
         setSelectedEmail(email);
         setSelectedWhatsApp(whatsapp);
     
-        console.log(selectedEmail);
-        console.log(selectedWhatsApp);
+        console.log(email);
+        console.log(whatsapp);
     };
    
         
@@ -225,7 +257,7 @@ import Header from "components/Headers/Header.js";
                                             placeholder={t('form.building')}
                                             type="text"
                                             name="building"
-                                            value={apartment.building}
+                                            value={apartment.building.toUpperCase()}
                                             onChange={handleChange}
                                         />
                                     </InputGroup>

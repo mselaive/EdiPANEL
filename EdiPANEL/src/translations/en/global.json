@@ -90,7 +90,8 @@
         "alert7":" and sending WhatsApp to:",
         "alert8":"Sending WhatsApp to:",
         "alert9":"Registered visit",
-        "alert10":"Frequent visitor has been found: "
+        "alert10":"Frequent visitor has been found: ",
+        "alert11": "Apartment or Building not found"
         
 
     },
