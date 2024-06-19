@@ -58,7 +58,8 @@
         "userprofile":"Perfil de Usuario",
         "home":"Inicio",
         "admin":"Administrador",
-        "resident":"Residentes"
+        "resident":"Residentes",
+        "residentpanel":"Residente"
 
         
     },

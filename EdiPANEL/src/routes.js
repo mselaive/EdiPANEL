@@ -114,4 +114,17 @@ export const routes2 = [
   
 ];
 
+
+export const routes3 = [
+  {
+    path: "/",
+    name: "form.form-title3",
+    icon: "ni ni-tie-bow text-primary",
+    component: <Frecuent_visit />,
+    layout: "/residentpanel",
+  }
+  
+];
+
+
 export default routes;

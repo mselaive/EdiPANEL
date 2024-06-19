@@ -55,7 +55,8 @@
         "userprofile":"User profile",
         "home":"Home",
         "admin":"Admin",
-        "resident":"Residents"
+        "resident":"Residents",
+        "residentpanel":"Resident"
     },
     "form":{
         "form-title1":"New Visitor Registration",
