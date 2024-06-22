@@ -173,6 +173,7 @@ const Form_visits = () => {
             .then(data => {
             
             setFrequentVisits(data);
+            console.log(data);
             
             })
             .catch(error => {
@@ -195,6 +196,7 @@ const Form_visits = () => {
             })
             .catch(error => {
             console.error('There was an error!', error);
+
             });
     }, []);
 
@@ -334,7 +336,7 @@ const Form_visits = () => {
             .then(data => console.log('Success:', data))
             .catch((error) => console.error('Error:', error));
             setVehicle({    
-            ...vehicle,
+            
             name: '',
             rut: '',
             check_in_time: '',
@@ -397,7 +399,7 @@ const Form_visits = () => {
                     rut: rut,
                     parking_building: building.toUpperCase(),
                     apartment: apartment,
-                    vehicle_number: vehicle_number,
+                    vehicle_number: vehicle_number.toUpperCase(),
                     check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
                     check_out_time: checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
                     parking_id: lugarDisponible.parking_id,
@@ -458,13 +460,14 @@ const Form_visits = () => {
         lugarDisponible.parking_name = vehicle.name;
         lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
-        lugarDisponible.vehicle_number = vehicle.vehicle_number;
+        lugarDisponible.vehicle_number = vehicle.vehicle_number.toUpperCase();
         lugarDisponible.parking_building = vehicle.parking_building.toUpperCase();
         lugarDisponible.parking_apartment = vehicle.apartment;
         lugarDisponible.parking_available = '1';
         showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
         setVehicle({
             ...vehicle,
+            vehicle_number: vehicle.vehicle_number.toUpperCase(),
             parking_building: vehicle.parking_building.toUpperCase(),
             check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
             check_out_time: checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
@@ -475,16 +478,7 @@ const Form_visits = () => {
         
         
         setShouldSubmit(true);
-        setVehicle({    
-            ...vehicle,
-            name: '',
-            rut: '',
-            check_in_time: '',
-            check_out_time: '',
-            vehicle_number: '',
-            parking_building: '',
-            apartment: '',
-        });
+        
 
         setShowSecondForm(false);
 
@@ -624,7 +618,7 @@ const Form_visits = () => {
                                         placeholder={t('form.patent')}
                                         type="text"
                                         name="vehicle_number"
-                                        value={vehicle.vehicle_number}
+                                        value={vehicle.vehicle_number.toUpperCase()}
                                         onChange={handleChange}
                                         
                                     />

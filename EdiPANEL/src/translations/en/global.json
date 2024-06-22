@@ -91,7 +91,10 @@
         "alert8":"Sending WhatsApp to:",
         "alert9":"Registered visit",
         "alert10":"Frequent visitor has been found: ",
-        "alert11": "Apartment or Building not found"
+        "alert11": "Apartment or Building not found",
+        "alert12": "Frequent visit successfully registered",
+        "alert13": "An error occurred while registering the frequent visit",
+        "alert14": "RUT registered as a frequent visit"
         
 
     },
