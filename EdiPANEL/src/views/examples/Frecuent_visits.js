@@ -257,7 +257,7 @@ const Frecuent_visit = () => {
                                         placeholder={t('form.patent')}
                                         type="text"
                                         name="patent"
-                                        value={frequentVisit.patent}
+                                        value={frequentVisit.patent.toUpperCase()}
                                         onChange={handleChange}
                                         
                                     />
