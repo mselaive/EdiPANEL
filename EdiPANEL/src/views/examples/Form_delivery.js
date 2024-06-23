@@ -145,7 +145,7 @@ import Header from "components/Headers/Header.js";
                 selectedEmail: selectedEmail // Aquí se incluye el correo seleccionado
             };
     
-            const response = await fetch('http://edipanelvercel.vercel.app/api/send-email', {
+            const response = await fetch('https://edipanelvercel.vercel.app/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
