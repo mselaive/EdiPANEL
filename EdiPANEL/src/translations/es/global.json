@@ -80,7 +80,9 @@
         "send":"Enviar",
         "search":"Buscar",
         "vehicle":"Estacionamiento de Visitas",
-        "image": "Subir Imagen"
+        "image": "Subir Imagen",
+        "residents":"Seleccionar Residentes",
+        "all":"Seleccionar todos"
         
 
 
@@ -91,15 +93,16 @@
         "alert3": "Notificación enviada",
         "alert4": "No se han encontrado residentes",
         "alert5": "Por favor seleccione al menos una opción",
-        "alert6": "Correo enviado a:",
-        "alert7": "y Whatsapp enviado a:",
-        "alert8": "Whatsapp enviado a:",
+        "alert6": "Correo/s",
+        "alert7": " y Whatsapp/s enviado/s",
+        "alert8": "Whatsapp/s enviado/s",
         "alert9": "Visita registrada",
         "alert10": "Se ha encontrado a la visita frecuente: ",
         "alert11": "Apartamento o Edificio no encontrado",
         "alert12": "Visita frecuente registrada exitosamente",
         "alert13": "Ha ocurrido un error al registrar la visita frecuente",
-        "alert14": "RUT registrado como visita frecuente"
+        "alert14": "RUT registrado como visita frecuente",
+        "alert15": "Por favor seleccione al menos un residente"
 
 
     },
