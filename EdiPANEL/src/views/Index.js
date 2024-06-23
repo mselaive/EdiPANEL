@@ -27,6 +27,7 @@ const Index = (props) => {
   }
 
   const [visitors, setVisitors] = useState([]);
+  const [frequentVisits, setFrequentVisits] = useState([]);
 
   useEffect(() => {
     fetch('https://edipanelvercel.vercel.app/api/getvisitors')
@@ -42,6 +43,26 @@ const Index = (props) => {
       .catch(error => {
         console.error('There was an error!', error);
       });
+  }, []);
+
+  // alamacenar los datos  de FrequentVisits
+  useEffect(() => {
+    fetch('https://edipanelvercel.vercel.app/api/getfrequentvisits')
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+        })
+        .then(data => {
+        
+        setFrequentVisits(data);
+        console.log(data);
+        
+        })
+        .catch(error => {
+        console.error('There was an error!', error);
+        });
   }, []);
 
   return (
@@ -94,87 +115,18 @@ const Index = (props) => {
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">{t("index.commun-title")}</th>
-                    <th scope="col">{t("index.commun-number")}</th>
-                    <th scope="col">{t("index.commun-perc")}</th>
+                    <th scope="col">{t("index.visits-title2")}</th>
+                    <th scope="col">{t("index.visits-title3")}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Roberto Díaz</th>
-                    <td>520</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-gradient-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Angelina Rodriguez</th>
-                    <td>500</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">70%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="70"
-                            barClassName="bg-gradient-success"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Alberto Saez</th>
-                    <td>407</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">80%</span>
-                        <div>
-                          <Progress max="100" value="80" />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Carla Sainz</th>
-                    <td>338</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">75%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="75"
-                            barClassName="bg-gradient-info"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Rodriga Toledo</th>
-                    <td>263</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">30%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="30"
-                            barClassName="bg-gradient-warning"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                {frequentVisits.map((frequentvisit, index) => (
+                    <tr key={index}>
+                        <td>{frequentvisit.name}</td>
+                        <td>{frequentvisit.building}</td>
+                        <td>{frequentvisit.apartment}</td>
+                    </tr>
+                ))}
                 </tbody>
               </Table>
             </Card>

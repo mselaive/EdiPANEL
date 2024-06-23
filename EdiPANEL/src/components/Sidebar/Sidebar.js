@@ -129,33 +129,14 @@ const Sidebar = (props) => {
         ) : null}
         {/* User */}
         <Nav className="align-items-center d-md-none">
-          <UncontrolledDropdown nav>
-            <DropdownToggle nav className="nav-link-icon">
-              <i className="ni ni-bell-55" />
-            </DropdownToggle>
-            <DropdownMenu
-              aria-labelledby="navbar-default_dropdown_1"
-              className="dropdown-menu-arrow"
-              right
-            >
-              <DropdownItem onClick={() => {
-                    const currentLanguage = i18n.language;
-                    if (currentLanguage === 'en') {
-                        i18n.changeLanguage('es');
-                    } else {
-                        i18n.changeLanguage('en');
-                    }
-                }}>{t("navbar.lenguage")}</DropdownItem>
-              <DropdownItem divider />
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          
           <UncontrolledDropdown nav>
             <DropdownToggle nav>
               <Media className="align-items-center">
                 <span className="avatar avatar-sm rounded-circle">
                   <img
                     alt="..."
-                    src={require("../../assets/img/theme/team-1-800x800.jpg")}
+                    src={require("../../assets/img/theme/team-4-800x800.jpg")}
                   />
                 </span>
               </Media>
@@ -164,6 +145,17 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">{t("sidebar.message")}</h6>
               </DropdownItem>
+              <DropdownItem href="#pablo" onClick={() => {
+                    const currentLanguage = i18n.language;
+                    if (currentLanguage === 'en') {
+                        i18n.changeLanguage('es');
+                    } else {
+                        i18n.changeLanguage('en');
+                    }
+                }}>
+                  <i className="ni ni-world" />
+                  <span>{t("navbar.lenguage")}</span>
+                </DropdownItem>
               <DropdownItem to="/panel/user-profile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>{t("sidebar.profile")}</span>
