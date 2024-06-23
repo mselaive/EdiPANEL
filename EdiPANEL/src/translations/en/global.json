@@ -75,7 +75,9 @@
         "send":"Send",
         "search":"Search",
         "vehicle":"Parking Lots",
-        "image": "Upload Image"
+        "image": "Upload Image",
+        "residents":"Select Residents",
+        "all":"Select all"
         
 
 
@@ -86,15 +88,16 @@
         "alert3":"Notification sent",
         "alert4":"No residents found",
         "alert5":"Please select at least one option",
-        "alert6":"Sending email to:",
-        "alert7":" and sending WhatsApp to:",
-        "alert8":"Sending WhatsApp to:",
+        "alert6":"Sending email/s",
+        "alert7":" and WhatsApp/s",
+        "alert8":"Sending WhatsApp/s",
         "alert9":"Registered visit",
         "alert10":"Frequent visitor has been found: ",
         "alert11": "Apartment or Building not found",
         "alert12": "Frequent visit successfully registered",
         "alert13": "An error occurred while registering the frequent visit",
-        "alert14": "RUT registered as a frequent visit"
+        "alert14": "RUT registered as a frequent visit",
+        "alert15": "Please select at least one resident"
         
 
     },
