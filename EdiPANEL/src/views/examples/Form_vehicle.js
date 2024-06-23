@@ -175,8 +175,7 @@ const Form_visits = () => {
                     currentDate.setHours(hours, minutes, 0); // Ajustar la fecha actual con la hora y minutos extraídos
     
                     const notificationTime = currentDate.getTime() - (15 * 60 * 1000); // 15 minutos antes
-    
-                    console.log(notificationTime); // Inspeccionar el valor calculado de notificationTime
+
                     return {
                         id: item.parking_id,
                         notificationTime: isNaN(notificationTime) ? null : notificationTime
