@@ -43,6 +43,7 @@ const Form_new_visits = () => {
           word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         ).join(" ");
     }
+    
 
     // Cargar las visitas frecuentes al cargar la página
     useEffect(() => {

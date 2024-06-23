@@ -25,6 +25,7 @@ import {
 import Header from "components/Headers/Header.js";
 import React, { useEffect, useState } from 'react';
 import { compileString } from "sass";
+import { or } from "ajv/dist/compile/codegen";
 
 const Form_visits = () => {
     const { t } = useTranslation("global");
@@ -48,6 +49,7 @@ const Form_visits = () => {
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
     const [showSecondForm, setShowSecondForm] = useState(false);
+    const [alterFirstForm, setAlterFirstForm] = useState(true);
     // Función para capitalizar la primera letra de cada palabra en una frase
     function capitalizeWords(str) {
         return str.split(" ").map(word => 
@@ -390,14 +392,15 @@ const Form_visits = () => {
     const handleFirstFormSubmit = (e) => {
         e.preventDefault();
         // Verificar que el campo rut no esté vacío
-        if (!vehicle.rut) {
+        if (!vehicle.rut && !vehicle.vehicle_number) {
             showAlertWithTimeout(t('alert.alert2'), 'warning');
             return;
         }
         
 
         // Verificar si el rut ingresado está en FrequentVisits
-        const visitFound = frequentVisits.find(visit => visit.rut === vehicle.rut);
+        const visitFound = frequentVisits.find(visit => visit.rut === vehicle.rut) || frequentVisits.find(visit => visit.vehicle_number === vehicle.vehicle_number.toUpperCase());
+        console.log(visitFound);
         if (visitFound) {
             // Si se encuentra el rut, puedes acceder a su id
             const {  name, rut, building, apartment, vehicle_number  } = visitFound;
@@ -537,7 +540,7 @@ const Form_visits = () => {
                         <div className="text-center text-muted mb-4">
                             <big>{t('form.form-title2')}</big>
                         </div>
-                        {!showSecondForm && (
+                        {!showSecondForm && !alterFirstForm && (
                             <Form role="form" onSubmit={handleFirstFormSubmit}>
                             <FormGroup>
                                     <InputGroup className="input-group-alternative">
@@ -556,13 +559,50 @@ const Form_visits = () => {
                                     </InputGroup>
                                 </FormGroup>
                                 <FormGroup>
+                                    <Button className="my-4" color="primary" type="button" onClick={ () => setAlterFirstForm(true)}>
+                                        {t("vehicles.form-title11")}
+                                    </Button>
+                                <Button className="my-4" color="primary" type="submit">
+                                    {t("form.register")}
+                                </Button>
+                                <Button type="button" color="primary" onClick={() => document.getElementById('image').click()}>{t('form.image')}</Button>
+                                <Label for="image" color="primary" style={{ visibility: 'hidden' }}>Image</Label>
+                                <Input type="file" name="image" id="image" onChange={handleImageChange} style={{ visibility: 'hidden', position: 'absolute', width: '1px', height: '1px' }}/>
+                                
+                                </FormGroup>    
+                                {showAlert && (
+                                        <Alert color={alertColor}>
+                                        {alertMessage}
+                                        </Alert>
+                                    )}
+                            </Form>
+                        )} {!showSecondForm && alterFirstForm && (
+                            <Form role="form" onSubmit={handleFirstFormSubmit}>
+                            <FormGroup>
+                                    <InputGroup className="input-group-alternative">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-credit-card text-primary" />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                            placeholder={t('form.patent')}
+                                            type="text"
+                                            name="vehicle_number"
+                                            value={vehicle.vehicle_number.toUpperCase()}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button className="my-4" color="primary" type="button" onClick={ () => setAlterFirstForm(false)}>
+                                    {t("vehicles.form-title12")}
+                                    </Button>
                                 <Button className="my-4" color="primary" type="submit">
                                     {t("form.register")}
                                 </Button>
                                 
-                                <Label for="image" color="primary" style={{ visibility: 'hidden' }}>Image</Label>
-                                <Input type="file" name="image" id="image" onChange={handleImageChange} style={{ visibility: 'hidden', position: 'absolute', width: '1px', height: '1px' }}/>
-                                <Button type="button" color="primary" onClick={() => document.getElementById('image').click()}>{t('form.image')}</Button>
+                                
                                 </FormGroup>    
                                 {showAlert && (
                                         <Alert color={alertColor}>
@@ -571,6 +611,9 @@ const Form_visits = () => {
                                     )}
                             </Form>
                         )}
+
+
+
                         {showSecondForm && (
                         <Form role="form" onSubmit={handleSubmit}>
                             <FormGroup className="mb-3">
