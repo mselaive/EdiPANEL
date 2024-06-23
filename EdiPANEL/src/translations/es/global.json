@@ -32,7 +32,7 @@
         "visits-title3":"Apartamento",
         "visits-title4":"Hora",
 
-        "commun":"Visitas más comunes",
+        "commun":"Visitas Frecuentes",
         "commun-title":"Nombre",
         "commun-number":"Cantidad",
         "commun-perc":"Porcentaje"
@@ -130,6 +130,8 @@
         "form-title6":"Patente",
         "form-title7":"Disponibilidad",
         "form-title8":"Nombre",
+        "form-title9":"Disponible",
+        "form-title10":"Ocupado",
         "edit":"Editar",
         "delete":"Eliminar",
         "delay":"Aplazar",

@@ -48,6 +48,12 @@ const Form_visits = () => {
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
     const [showSecondForm, setShowSecondForm] = useState(false);
+    // Función para capitalizar la primera letra de cada palabra en una frase
+    function capitalizeWords(str) {
+        return str.split(" ").map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(" ");
+    }
 
     // Función para manejar el envío del formulario
     const handleImageChange = (e) => {
@@ -90,7 +96,7 @@ const Form_visits = () => {
                 );
                 if (lugarDisponible) {
                      // Asignar los datos de vehicle a lugarDisponible
-                    lugarDisponible.parking_name = name;
+                    lugarDisponible.parking_name = capitalizeWords(name);
                     lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
                     lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
                     lugarDisponible.vehicle_number = vehicle_number;
@@ -101,7 +107,7 @@ const Form_visits = () => {
                     setVehicle({
                         ...vehicle,
 
-                        name: name,
+                        name: capitalizeWords(name),
                         rut: rut,
                         parking_building: building,
                         apartment: apartment,
@@ -127,7 +133,7 @@ const Form_visits = () => {
                 console.log(response.data);
                 setVehicle({
                     ...vehicle,
-                    name: response.data.name,
+                    name: capitalizeWords(response.data.name),
                     rut: response.data.rut,
                     
                     
@@ -414,7 +420,7 @@ const Form_visits = () => {
             );
             if (lugarDisponible) {
                 // Asignar los datos de vehicle a lugarDisponible
-                lugarDisponible.parking_name = name;
+                lugarDisponible.parking_name = capitalizeWords(name);
                 lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
                 lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
                 lugarDisponible.vehicle_number = vehicle_number;
@@ -424,7 +430,7 @@ const Form_visits = () => {
                 showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
                 setVehicle({
                     ...vehicle,
-                    name: name,
+                    name: capitalizeWords(name),
                     rut: rut,
                     parking_building: building.toUpperCase(),
                     apartment: apartment,
@@ -486,7 +492,7 @@ const Form_visits = () => {
         );
         if (lugarDisponible) {
         // Asignar los datos de vehicle a lugarDisponible
-        lugarDisponible.parking_name = vehicle.name;
+        lugarDisponible.parking_name = capitalizeWords(vehicle.name);
         lugarDisponible.check_in_time = checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.check_out_time = checkOutTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString();
         lugarDisponible.vehicle_number = vehicle.vehicle_number.toUpperCase();
@@ -496,6 +502,7 @@ const Form_visits = () => {
         showAlertWithTimeout(t('vehicles.alert1') + lugarDisponible.parking_id , 'success');
         setVehicle({
             ...vehicle,
+            name: capitalizeWords(vehicle.name),
             vehicle_number: vehicle.vehicle_number.toUpperCase(),
             parking_building: vehicle.parking_building.toUpperCase(),
             check_in_time: checkInTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
@@ -577,7 +584,7 @@ const Form_visits = () => {
                                         placeholder={t('index.commun-title')}
                                         type="text"
                                         name="name"
-                                        value={vehicle.name}
+                                        value={capitalizeWords(vehicle.name)}
                                         onChange={handleChange}
                                         
                                     />
@@ -707,7 +714,7 @@ const Form_visits = () => {
                                             <td>
                                                 <Badge color="" className="badge-dot">
                                                     <i className={parking.parking_available == 0 ? "bg-success" : "bg-danger"} />
-                                                    {parking.parking_available == 0 ? "Available" : "Unavailable"}
+                                                    {parking.parking_available == 0 ? t('vehicles.form-title9') : t('vehicles.form-title9')}
                                                 </Badge>
                                             </td>
                                             

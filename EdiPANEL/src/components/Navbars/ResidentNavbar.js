@@ -42,16 +42,7 @@ const ResidentNavbar = (props) => {
             {t("navbar.dashboard")}
           </Link>
 
-          <NavItem className="h4 mb-0 text-white text-uppercase d-none navbar-dark d-lg-inline-block " expand='md' onClick={() => {
-                    const currentLanguage = i18n.language;
-                    if (currentLanguage === 'en') {
-                        i18n.changeLanguage('es');
-                    } else {
-                        i18n.changeLanguage('en');
-                    }
-                }}>
-            {t("navbar.lenguage")}
-          </NavItem>
+          
           
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
@@ -60,7 +51,7 @@ const ResidentNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                      src={require("../../assets/img/theme/team-1-800x800.jpg")}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
@@ -75,10 +66,22 @@ const ResidentNavbar = (props) => {
                   <h6 className="text-overflow m-0">{t("navbar.message")}</h6>
                 </DropdownItem>
                 <DropdownItem divider />
+                <DropdownItem href="#pablo" onClick={() => {
+                    const currentLanguage = i18n.language;
+                    if (currentLanguage === 'en') {
+                        i18n.changeLanguage('es');
+                    } else {
+                        i18n.changeLanguage('en');
+                    }
+                }}>
+                  <i className="ni ni-world" />
+                  <span>{t("navbar.lenguage")}</span>
+                </DropdownItem>
                 <DropdownItem href="#pablo" onClick={handleLogout}>
                   <i className="ni ni-user-run" />
                   <span>{t("navbar.logout")}</span>
                 </DropdownItem>
+                
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

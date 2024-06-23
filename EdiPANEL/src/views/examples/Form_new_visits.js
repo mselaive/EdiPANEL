@@ -37,6 +37,12 @@ const Form_new_visits = () => {
     const [apartments, setApartments] = useState([]);
     // Estado para controlar la visibilidad del segundo formulario
     const [showSecondForm, setShowSecondForm] = useState(false);
+    // Función para capitalizar las palabras
+    function capitalizeWords(str) {
+        return str.split(" ").map(word => 
+          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(" ");
+    }
 
     // Cargar las visitas frecuentes al cargar la página
     useEffect(() => {
@@ -286,6 +292,7 @@ const Form_new_visits = () => {
     
         setVisitor({       
             ...visitor,
+            name: capitalizeWords(visitor.name),
             building: visitor.building.toUpperCase(),
             time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toString(),
         });
@@ -354,7 +361,7 @@ const Form_new_visits = () => {
                                             placeholder={t('index.commun-title')}
                                             type="text"
                                             name="name"
-                                            value={visitor.name}
+                                            value={capitalizeWords(visitor.name)}
                                             onChange={handleChange}
                                         />
                                     </InputGroup>

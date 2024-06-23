@@ -13,7 +13,7 @@ import {
     Row,
     Col,
     Alert,
-    Label
+    
 
 } from "reactstrap";
 // core components
@@ -38,6 +38,12 @@ const Frecuent_visit = () => {
     const [alertColor, setAlertColor] = useState('');
     const [timeoutId, setTimeoutId] = useState(null);
 
+    // Función para capitalizar las palabras
+    function capitalizeWords(str) {
+        return str.split(" ").map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(" ");
+    }
 
     useEffect(() => {
         fetch('https://edipanelvercel.vercel.app/api/getfrequentvisits',)
@@ -103,7 +109,7 @@ const Frecuent_visit = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+        console.log( capitalizeWords(frequentVisit.name));
         
         if (frequentVisit.name === "" || frequentVisit.rut === "" || frequentVisit.building === "" || frequentVisit.apartment === "" || frequentVisit.patent === "") {
             showAlertWithTimeout(t('alert.alert2'), 'warning');
@@ -188,7 +194,7 @@ const Frecuent_visit = () => {
                                         placeholder={t('index.commun-title')}
                                         type="text"
                                         name="name"
-                                        value={frequentVisit.name}
+                                        value={ capitalizeWords(frequentVisit.name)}
                                         onChange={handleChange}
 
                                     />
