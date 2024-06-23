@@ -143,22 +143,51 @@ const Form_visits = () => {
 
     // alamacenar los datos  de Parking
     useEffect(() => {
-    fetch('https://edipanelvercel.vercel.app/api/getparking')
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-        })
-        .then(data => {
-        
-        setParking(data);
-        console.log(data);
-        
-        })
-        .catch(error => {
-        console.error('There was an error!', error);
-        });
+        // Paso 1: Borrar los datos existentes en localStorage
+        localStorage.removeItem('notifications');
+    
+        // Paso 2 y 3: Realizar la petición fetch y procesar los datos
+        fetch('https://edipanelvercel.vercel.app/api/getparking')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setParking(data);
+                console.log(data); // Muestra los datos originales para inspección
+    
+                const notifications = data.filter(item => item.check_out_time).map(item => {
+                    console.log(item.check_out_time); // Inspeccionar el valor de check_out_time
+    
+                    // Convertir "4:00 PM" a un objeto Date
+                    const [time, modifier] = item.check_out_time.split(' ');
+                    let [hours, minutes] = time.split(':');
+                    if (modifier === 'PM' && hours !== '12') {
+                        hours = parseInt(hours, 10) + 12; // Convertir horas PM a formato 24h, excepto para el mediodía
+                    }
+                    if (modifier === 'AM' && hours === '12') {
+                        hours = 0; // Medianoche se representa como 0 horas
+                    }
+    
+                    const currentDate = new Date();
+                    currentDate.setHours(hours, minutes, 0); // Ajustar la fecha actual con la hora y minutos extraídos
+    
+                    const notificationTime = currentDate.getTime() - (15 * 60 * 1000); // 15 minutos antes
+
+                    return {
+                        id: item.parking_id,
+                        notificationTime: isNaN(notificationTime) ? null : notificationTime
+                    };
+                });
+                console.log(notifications); // Inspeccionar el resultado final
+                // Paso 3: Guardar los nuevos datos calculados en localStorage
+                localStorage.setItem('notifications', JSON.stringify(notifications));
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
     }, []);
 
     // alamacenar los datos  de FrequentVisits
