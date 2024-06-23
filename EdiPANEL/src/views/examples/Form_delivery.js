@@ -142,10 +142,11 @@ import Header from "components/Headers/Header.js";
         setShowSecondForm(true);
     };
 
-    const handleSendEmail = async () => {
+    const handleSendEmail = async (email) => {
+        console.log('Enviando correo a la API:', email);
         try {
             const emailData = {
-                selectedEmail: selectedEmail // Aquí se incluye el correo seleccionado
+                selectedEmail: email // Aquí se incluye el correo seleccionado
             };
     
             const response = await fetch('http://edipanelvercel.vercel.app/api/send-email', {
@@ -214,7 +215,10 @@ import Header from "components/Headers/Header.js";
         
         
         } else if (checkbox1 && !checkbox2) {
-            handleSendEmail();
+            emails.forEach(email => {
+                console.log('Enviando correo a:', email);
+                handleSendEmail(email);
+            });
             showAlertWithTimeout(`${t('alert.alert6')}`, 'success');
         } else if (checkbox2 && !checkbox1) {
             showAlertWithTimeout(`${t('alert.alert8')}`, 'success');
@@ -227,6 +231,10 @@ import Header from "components/Headers/Header.js";
             }
     
         } else if (checkbox1 && checkbox2) {
+            emails.forEach(email => {
+                console.log('Enviando correo a:', email);
+                handleSendEmail(email);
+            });
             showAlertWithTimeout(`${t('alert.alert6')} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
     
             try {
@@ -241,6 +249,7 @@ import Header from "components/Headers/Header.js";
         setSelectedOptions([]);
         setCheckbox1(false);
         setCheckbox2(false);
+        setCheckbox3(false);
         setShowSecondForm(false);
         setShowAlert(true);
         
