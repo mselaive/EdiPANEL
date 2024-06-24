@@ -31,11 +31,14 @@ import Header from "components/Headers/Header.js";
     const [residents, setResidents] = useState([]);
     const [checkbox1, setCheckbox1] = useState(false);
     const [checkbox2, setCheckbox2] = useState(false);
-    const [selectedEmail, setSelectedEmail] = useState('');
-    const [selectedWhatsApp, setSelectedWhatsApp] = useState('');
+    const [checkbox3, setCheckbox3] = useState(false);
+    const [selectedEmail, setSelectedEmail] = useState([]);
+    const [selectedWhatsApp, setSelectedWhatsApp] = useState([]);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertColor, setAlertColor] = useState('');
     const [apartments, setApartments] = useState([]);
+    const [options, setOptions] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
     
     const [timeoutId, setTimeoutId] = useState(null);
     const showAlertWithTimeout = (message, color) => {
@@ -77,9 +80,6 @@ import Header from "components/Headers/Header.js";
     }, []);
 
     const handleChange = (e) => {
-    
-        
-        
         setApartment({
             ...apartment,
             [e.target.name]: e.target.value,
@@ -121,12 +121,15 @@ import Header from "components/Headers/Header.js";
                 return;
             }
             console.log(data);
-            setSelectedEmail(data[0].email);
-            setSelectedWhatsApp(data[0].whatsapp);
+            
             setResidents(data);
             
-            console.log(selectedEmail);
-            console.log(selectedWhatsApp);
+            setOptions(data.map(resident => ({
+                value: `${resident.email}|${resident.whatsapp}`,
+                label: resident.resident_name,
+            })));
+            
+            
   
            
             
@@ -139,13 +142,14 @@ import Header from "components/Headers/Header.js";
         setShowSecondForm(true);
     };
 
-    const handleSendEmail = async () => {
+    const handleSendEmail = async (email) => {
+        console.log('Enviando correo a la API:', email);
         try {
             const emailData = {
-                selectedEmail: selectedEmail // Aquí se incluye el correo seleccionado
+                selectedEmail: email // Aquí se incluye el correo seleccionado
             };
     
-            const response = await fetch('http://edipanelvercel.vercel.app/api/send-email', {
+            const response = await fetch('https://edipanelvercel.vercel.app/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -166,6 +170,12 @@ import Header from "components/Headers/Header.js";
 
     const handleSubmit2 = async (e) => {
         e.preventDefault();
+        if (selectedOptions.length === 0) {
+            showAlertWithTimeout(t('alert.alert15'), 'warning');
+            return;
+        }
+
+
     
         const url = 'https://graph.facebook.com/v19.0/296891826840399/messages';
         const headers = {
@@ -181,15 +191,37 @@ import Header from "components/Headers/Header.js";
                 "body":"*Usted ha recibido un paquete/correo* \n\nEstimado/a vecino/a, \n\nLe informamos que ha recibido un paquete/correo en la conserjería. \n\nPor favor, diríjase a la conserjería para poder recibirlo lo antes posible. Gracias por su compromiso \n\n_Saludos, EdiPANEL_"
             }
         };
+        const emails = [];
+        const whatsApps = [];
+
+        // Recorrer cada objeto en selectedOptions
+        selectedOptions.forEach(option => {
+        // Dividir el valor en correo electrónico y número de WhatsApp
+        const [email, whatsApp] = option.value.split('|');
+        
+        // Almacenar el correo electrónico y el número de WhatsApp en sus respectivas listas
+        emails.push(email);
+        whatsApps.push(whatsApp);
+        });
+        // Asignar los valores a selectedEmail y selectedWhatsApp
+        setSelectedEmail(emails);
+        setSelectedWhatsApp(whatsApps);
+        console.log("emails",emails);
+        console.log("wsp",whatsApps);
     
         if (!checkbox1 && !checkbox2) {
             showAlertWithTimeout(t('alert.alert5'), 'warning');
             return;
+        
+        
         } else if (checkbox1 && !checkbox2) {
-            handleSendEmail();
-            showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail}`, 'success');
+            emails.forEach(email => {
+                console.log('Enviando correo a:', email);
+                handleSendEmail(email);
+            });
+            showAlertWithTimeout(`${t('alert.alert6')}`, 'success');
         } else if (checkbox2 && !checkbox1) {
-            showAlertWithTimeout(`${t('alert.alert8')} ${selectedWhatsApp}`, 'success');
+            showAlertWithTimeout(`${t('alert.alert8')}`, 'success');
     
             /**try {
                 const response = await axios.post(url, data, { headers });
@@ -199,7 +231,11 @@ import Header from "components/Headers/Header.js";
             }**/
     
         } else if (checkbox1 && checkbox2) {
-            showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
+            emails.forEach(email => {
+                console.log('Enviando correo a:', email);
+                handleSendEmail(email);
+            });
+            showAlertWithTimeout(`${t('alert.alert6')} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
     
             try {
                 const response = await axios.post(url, data, { headers });
@@ -208,22 +244,27 @@ import Header from "components/Headers/Header.js";
                 console.error(error);
             }
         }
-        setSelectedEmail('');
-        setSelectedWhatsApp('');
-    
+        setSelectedEmail([]);
+        setSelectedWhatsApp([]);
+        setSelectedOptions([]);
+        setCheckbox1(false);
+        setCheckbox2(false);
+        setCheckbox3(false);
         setShowSecondForm(false);
         setShowAlert(true);
         
     };
       
     
-    const handleSelectChange = (event) => {
-        const [email, whatsapp] = event.target.value.split('|');
-        setSelectedEmail(email);
-        setSelectedWhatsApp(whatsapp);
-    
-        console.log(email);
-        console.log(whatsapp);
+    const handleSelectChange = (selectedOptions) => {
+        
+        setSelectedOptions(selectedOptions);
+        if (selectedOptions.length === options.length) {
+            setCheckbox3(true);
+          } else {
+            setCheckbox3(false);
+          }
+        console.log('holas',selectedOptions);
     };
    
         
@@ -296,18 +337,38 @@ import Header from "components/Headers/Header.js";
                             <div>
                                 <FormGroup>
                                     <InputGroup className="input-group-alternative">
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>
-                                                <i className="ni ni-satisfied text-primary" />
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                        <select className="form-control" onChange={handleSelectChange}>
-                                            {residents.map((resident, index) => (
-                                                <option key={index} value={`${resident.email}|${resident.whatsapp}`}>
-                                                    {resident.resident_name}
-                                                </option>
-                                            ))}
-                                        </select>
+                                        <Select
+                                            isMulti
+                                            placeholder={t('form.residents')}
+                                            name="residents"
+                                            options={options}
+                                            className="basic-multi-select"
+                                            classNamePrefix="residents"
+                                            onChange={handleSelectChange}
+                                            value={selectedOptions}
+                                            styles={{ 
+                                                container: (base) => ({ ...base, width: '100%' }),
+                                                menu: (base) => ({ ...base, backgroundColor: 'white', zIndex: 9999 }),
+                                                option: (base, state) => ({
+                                                    ...base,
+                                                    
+                                                    color: state.isSelected ? '#8898aa' : '#8898aa', // Cambia el color del texto de las opciones aquí
+                                                    backgroundColor: state.isSelected ? '#8898aa' : '#fff',
+                                                    ':hover': {
+                                                        backgroundColor: '#5e72e4',
+                                                        color: '#fff',
+                                                    },
+                                                }),
+                                                placeholder: (defaultStyles) => {
+                                                    return {
+                                                        ...defaultStyles,
+                                                        color: '#8898aa', // Cambia el color del texto del placeholder aquí
+                                                    };
+                                                },
+                                                
+                                            }}
+
+                                        />   
                                     </InputGroup>
                                 </FormGroup>
                                 <div className="container content">
@@ -339,6 +400,32 @@ import Header from "components/Headers/Header.js";
                                             
                                             <label className="custom-control-label" htmlFor="customCheck6">
                                                 {t("form.wsp")}
+                                                
+                                            </label>
+                                        </div>
+                                        <div className="col custom-control custom-control-alternative custom-checkbox mb-3  ">
+                                            <input
+                                                className="custom-control-input"
+                                                id="customCheck7"
+                                                type="checkbox"
+                                                checked={checkbox3}
+                                                onChange={e => {
+                                                    setCheckbox3(e.target.checked)
+                                                    if (e.target.checked) {
+                                                        // Cuando el checkbox está marcado, selecciona todas las opciones
+                                                        setSelectedOptions(options);
+                                                    } else {
+                                                        // Cuando el checkbox está desmarcado, limpia la selección
+                                                        setSelectedOptions([]);
+                                                    }
+
+                                                }}
+                                                
+                                                
+                                            />
+                                            
+                                            <label className="custom-control-label" htmlFor="customCheck7">
+                                               {t("form.all")}
                                                 
                                             </label>
                                         </div>

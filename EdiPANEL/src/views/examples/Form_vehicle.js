@@ -757,7 +757,7 @@ const Form_visits = () => {
                                             <td>
                                                 <Badge color="" className="badge-dot">
                                                     <i className={parking.parking_available == 0 ? "bg-success" : "bg-danger"} />
-                                                    {parking.parking_available == 0 ? t('vehicles.form-title9') : t('vehicles.form-title9')}
+                                                    {parking.parking_available == 0 ? t('vehicles.form-title9') : t('vehicles.form-title10')}
                                                 </Badge>
                                             </td>
                                             
@@ -774,12 +774,7 @@ const Form_visits = () => {
                                                     <i className="fas fa-ellipsis-v" />
                                                 </DropdownToggle>
                                                 <DropdownMenu className="dropdown-menu-arrow" right>
-                                                    <DropdownItem
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                    >
-                                                    {t("vehicles.edit")}
-                                                    </DropdownItem>
+                                                    
                                                     <DropdownItem
                                                     href="#pablo"
                                                     onClick={(e) => {
