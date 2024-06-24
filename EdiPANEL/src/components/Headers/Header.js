@@ -70,7 +70,7 @@ const Header = () => {
                           {t("header.title1")}
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          2.807
+                          143
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -99,7 +99,7 @@ const Header = () => {
                         >
                           {t("header.title2")}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">208</span>
+                        <span className="h2 font-weight-bold mb-0">23</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -127,7 +127,7 @@ const Header = () => {
                         >
                           {t("header.title3")}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">24</span>
+                        <span className="h2 font-weight-bold mb-0">6</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -155,7 +155,7 @@ const Header = () => {
                         >
                           {t("header.title4")}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">49</span>
+                        <span className="h2 font-weight-bold mb-0">12</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">

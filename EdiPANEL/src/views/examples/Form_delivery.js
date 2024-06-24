@@ -191,12 +191,12 @@ import Header from "components/Headers/Header.js";
         } else if (checkbox2 && !checkbox1) {
             showAlertWithTimeout(`${t('alert.alert8')} ${selectedWhatsApp}`, 'success');
     
-            try {
+            /**try {
                 const response = await axios.post(url, data, { headers });
                 console.log(response.data);
             } catch (error) {
                 console.error(error);
-            }
+            }**/
     
         } else if (checkbox1 && checkbox2) {
             showAlertWithTimeout(`${t('alert.alert6')} ${selectedEmail} ${t('alert.alert7')} ${selectedWhatsApp}`, 'success');
