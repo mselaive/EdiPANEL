@@ -177,19 +177,25 @@ import Header from "components/Headers/Header.js";
 
 
     
-        const url = 'https://graph.facebook.com/v19.0/296891826840399/messages';
+        const url = 'https://graph.facebook.com/v19.0/389458660914206/messages';
+
+        // Headers para la solicitud
         const headers = {
-            'Authorization': 'Authorization: Bearer EAAZAKFcyZCYIkBO4cUWOw9DFGZBUVPKHZAbmNMWZAMF9LMpr6mdvECFX8M9OFszgMar51SA3kAxDxPNnZAbn0utjSOPSCytUOBRJciTX8BiImxMDTQDqEUZAqLa9rZCyguG3ygDwOb2JENKveVg72Y9NTv3meVzKxKgfQLTZBctcpaASneg1hKW3Ly3NUZCtcB7Qng18O0ildN3zQbXpnaxhfP',
-            'Content-Type': 'application/json'
+        'Authorization': 'Bearer EAB5O1sMLkkIBO43QEkRxi9yFZCjnGPv3pTWBsCPe2odF8qqPONYbYzec5UBZBRQiUhgxpHZC1Srru7tGXjijt7yOYXMZCsmWOERZAhx5y9uPPOmTGxIeXN1YLBanYTIgC9ATR5C0QDD0wTOPv1GfER4Y8Jsbd3JZCSKJuPYvGJNdcUlHHoSEP9jvucwnm6JZAVZCMfS9iNEnZAmqRynkN7ZAHw',
+        'Content-Type': 'application/json'
         };
+
+        // Datos para la solicitud
         const data = {
-            "messaging_product": "whatsapp",
-            "to": "56974492622",
-            "type": "text",
-            "text": {
-                "preview_url": "false",
-                "body":"*Usted ha recibido un paquete/correo* \n\nEstimado/a vecino/a, \n\nLe informamos que ha recibido un paquete/correo en la conserjería. \n\nPor favor, diríjase a la conserjería para poder recibirlo lo antes posible. Gracias por su compromiso \n\n_Saludos, EdiPANEL_"
+        messaging_product: "whatsapp",
+        to: "56982076323",
+        type: "template",
+        template: {
+            name: "edipalnel",
+            language: {
+            code: "es"
             }
+        }
         };
         const emails = [];
         const whatsApps = [];
@@ -223,12 +229,13 @@ import Header from "components/Headers/Header.js";
         } else if (checkbox2 && !checkbox1) {
             showAlertWithTimeout(`${t('alert.alert8')}`, 'success');
     
-            /**try {
+          
+            try {
                 const response = await axios.post(url, data, { headers });
                 console.log(response.data);
             } catch (error) {
                 console.error(error);
-            }**/
+            }
     
         } else if (checkbox1 && checkbox2) {
             emails.forEach(email => {
