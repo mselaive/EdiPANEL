@@ -181,7 +181,7 @@ import Header from "components/Headers/Header.js";
 
         // Headers para la solicitud
         const headers = {
-        'Authorization': 'Bearer EAB5O1sMLkkIBO43QEkRxi9yFZCjnGPv3pTWBsCPe2odF8qqPONYbYzec5UBZBRQiUhgxpHZC1Srru7tGXjijt7yOYXMZCsmWOERZAhx5y9uPPOmTGxIeXN1YLBanYTIgC9ATR5C0QDD0wTOPv1GfER4Y8Jsbd3JZCSKJuPYvGJNdcUlHHoSEP9jvucwnm6JZAVZCMfS9iNEnZAmqRynkN7ZAHw',
+        'Authorization': 'Bearer EAB5O1sMLkkIBO817ddmHO9zG7ZCuAX7lB1F3LZC3NhDdRkrTgWED282kJh02HL6dQ3f0bpP9jwLu3BGyTqQW9nLTybdrXRkOZA3DZBjCUxmfdH7QCp4vAbXMZBG5kzoOiuXzOljDfzHKhGDEkjzmW670WoipiKc4SJqw1TwyQvY8H809Rp7cw4rSnZChBRs8VdjUXwqo6IAz1wRm4weYEZD',
         'Content-Type': 'application/json'
         };
 
